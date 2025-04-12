@@ -15,16 +15,21 @@ import model.SaleInfoDTO;
  * This serves as the main controller that the user interacts with the model and integration systems.
  */
 public class Controller {
-    private AccountingSystem accountingSystem = new AccountingSystem();
-    private DiscountCatalog discountCatalog = new DiscountCatalog();
-    private InventorySystem inventorySystem = new InventorySystem();
-    private Printer printer = new Printer();
+    private AccountingSystem accountingSystem;
+    private DiscountCatalog discountCatalog;
+    private InventorySystem inventorySystem;
+    private Printer printer;
     private Sale sale;
 
     /**
      * Constructor for the Controller class.
      */
-    public Controller() {}
+    public Controller() {
+        accountingSystem = new AccountingSystem();
+        discountCatalog = new DiscountCatalog();
+        inventorySystem = new InventorySystem();
+        printer = new Printer();
+    }
 
     /**
      * Starts a new sale.
@@ -65,9 +70,9 @@ public class Controller {
     }
 
     /**
-     * Ends the current Sale instance.
+     * Ends the current sale and returns the total price for this sale.
      * 
-     * @return The total price of the sale.
+     * @return The total price of the current sale.
      */
     public float endSale() {
         float totalPrice = sale.getTotalPrice();
@@ -75,7 +80,7 @@ public class Controller {
     }
 
     /**
-     * Requests the eligible discounts of this sale for the customer from the discount catalog.
+     * Requests the eligible discounts of this sale and returns the discounted price.
      * 
      * @param customerID The ID of the customer.
      * @return The total price after applying the discount.
@@ -89,7 +94,7 @@ public class Controller {
     }
 
     /**
-     * Handles payment and returns the change, and prints the receipt.
+     * Handles payment and returns the change, then prints the receipt.
      * 
      * @param amount The paid amount.
      * @return The change to be returned to the customer.
