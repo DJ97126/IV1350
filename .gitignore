@@ -2,4 +2,5 @@
 *.lock
 *.bak
 bin/
+lib/
 .vscode/
