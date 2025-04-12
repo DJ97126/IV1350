@@ -12,8 +12,7 @@ import model.SaleDTO;
 import model.SaleInfoDTO;
 
 /**
- * This serves as the main controller that the user interacts with the model and
- * integration systems.
+ * This serves as the main controller that the user interacts with the model and integration systems.
  */
 public class Controller {
     private AccountingSystem accountingSystem = new AccountingSystem();
@@ -25,8 +24,7 @@ public class Controller {
     /**
      * Constructor for the Controller class.
      */
-    public Controller() {
-    }
+    public Controller() {}
 
     /**
      * Starts a new sale.
@@ -77,8 +75,7 @@ public class Controller {
     }
 
     /**
-     * Requests the eligible discounts of this sale for the customer from the
-     * discount catalog.
+     * Requests the eligible discounts of this sale for the customer from the discount catalog.
      * 
      * @param customerID The ID of the customer.
      * @return The total price after applying the discount.

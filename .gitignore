@@ -1,6 +1,9 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/java-formatter.xml
+bin/
+lib/
+
 *.pdf
 *.lock
 *.bak
-bin/
-lib/
-.vscode/

@@ -1,6 +1,5 @@
 package integration;
 
 public class ItemDTO {
-    public ItemDTO() {
-    }
+    public ItemDTO() {}
 }

@@ -4,8 +4,7 @@ import integration.DiscountDTO;
 import integration.ItemDTO;
 
 public class Sale {
-    public Sale() {
-    }
+    public Sale() {}
 
     public SaleInfoDTO addBoughtItem(ItemDTO boughtItem) {
         return new SaleInfoDTO(); // Placeholder
@@ -27,8 +26,7 @@ public class Sale {
         return 0.0f; // Placeholder
     }
 
-    public void setAmountPaid(float amount) {
-    }
+    public void setAmountPaid(float amount) {}
 
     public SaleDTO getSaleInfo(float amount) {
         return new SaleDTO(); // Placeholder

@@ -3,9 +3,7 @@ package integration;
 import model.ReceiptDTO;
 
 public class Printer {
-    public Printer() {
-    }
+    public Printer() {}
 
-    public void printReceipt(ReceiptDTO receiptDTO) {
-    }
+    public void printReceipt(ReceiptDTO receiptDTO) {}
 }
