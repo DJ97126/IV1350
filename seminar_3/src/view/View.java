@@ -16,4 +16,13 @@ public class View {
     public View(Controller controller) {
         this.controller = controller;
     }
+
+    /**
+     * Simulates the execution of the system.
+     * This method is a placeholder for actual user interaction.
+     */
+    public void simulateExecution() {
+        controller.startSale();
+        System.out.println("A new sale as been started.");
+    }
 }

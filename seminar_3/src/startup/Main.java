@@ -15,6 +15,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Controller controller = new Controller();
-        new View(controller);
+        View view = new View(controller);
+        view.simulateExecution();
     }
 }
