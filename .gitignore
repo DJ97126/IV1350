@@ -3,6 +3,7 @@
 !.vscode/java-formatter.xml
 bin/
 lib/
+javadoc/
 
 *.pdf
 *.lock
