@@ -106,7 +106,7 @@ public class Controller {
         accountingSystem.account(saleDTO);
         inventorySystem.updateInventory(saleDTO);
         printer.printReceipt(receiptDTO);
-        float change = saleDTO.getChange();
+        float change = saleDTO.change();
         return change;
     }
 }

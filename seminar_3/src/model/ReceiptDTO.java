@@ -1,5 +1,3 @@
 package model;
 
-public class ReceiptDTO {
-    public ReceiptDTO() {}
-}
+public record ReceiptDTO() {}

@@ -1,5 +1,3 @@
 package model;
 
-public class SaleInfoDTO {
-    public SaleInfoDTO() {}
-}
+public record SaleInfoDTO() {}

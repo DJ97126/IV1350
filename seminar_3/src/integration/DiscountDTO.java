@@ -1,5 +1,3 @@
 package integration;
 
-public class DiscountDTO {
-    public DiscountDTO() {}
-}
+public record DiscountDTO() {}

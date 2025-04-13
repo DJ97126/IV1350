@@ -29,7 +29,7 @@ public class Sale {
     public void setAmountPaid(float amount) {}
 
     public SaleDTO getSaleInfo(float amount) {
-        return new SaleDTO(); // Placeholder
+        return new SaleDTO(amount); // Placeholder
     }
 
     public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
