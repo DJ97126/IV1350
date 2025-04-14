@@ -24,5 +24,15 @@ public class View {
     public void simulateExecution() {
         controller.startSale();
         System.out.println("A new sale as been started.");
+
+        controller.enterItem("abc123");
+        controller.enterItem("abc123");
+        controller.enterItem("invalidID");
+        controller.enterItem("def456");
+
+        controller.endSale();
+        System.out.println("Current sale has ended.");
+
+        controller.enterAmountPaid(100);
     }
 }

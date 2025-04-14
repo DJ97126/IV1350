@@ -5,7 +5,7 @@ import model.SaleDTO;
 public class InventorySystem {
     public InventorySystem() {}
 
-    public ItemDTO retrieveItem(int itemID) {
+    public ItemDTO retrieveItem(String itemID) {
         return new ItemDTO(); // Placeholder
     }
 

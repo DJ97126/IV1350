@@ -44,7 +44,7 @@ public class Controller {
      * @param itemID The ID of the item to be entered into the sale.
      * @return The current item information and running total.
      */
-    public SaleInfoDTO enterItem(int itemID) {
+    public SaleInfoDTO enterItem(String itemID) {
         ItemDTO boughtItem = inventorySystem.retrieveItem(itemID);
         if (boughtItem != null) {
             SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
@@ -60,7 +60,7 @@ public class Controller {
      * @param quantity The quantity of the item.
      * @return The current item information and running total.
      */
-    public SaleInfoDTO enterItem(int itemID, int quantity) {
+    public SaleInfoDTO enterItem(String itemID, int quantity) {
         ItemDTO boughtItem = inventorySystem.retrieveItem(itemID);
         if (boughtItem != null) {
             SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem, quantity);
