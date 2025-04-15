@@ -6,7 +6,7 @@ public class InventorySystem {
     public InventorySystem() {}
 
     public ItemDTO retrieveItem(String itemID) {
-        return new ItemDTO(); // Placeholder
+        return null; // Placeholder
     }
 
     public void updateInventory(SaleDTO saleDTO) {}

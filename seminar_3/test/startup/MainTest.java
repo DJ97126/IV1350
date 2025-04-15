@@ -7,14 +7,11 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
-    private Main instanceToTest;
     private ByteArrayOutputStream printoutBuffer;
     private PrintStream originalSysOut;
 
     @BeforeEach
     public void setUp() {
-        instanceToTest = new Main();
-
         printoutBuffer = new ByteArrayOutputStream();
         PrintStream inMemSysOut = new PrintStream(printoutBuffer);
         originalSysOut = System.out;
@@ -23,8 +20,6 @@ public class MainTest {
 
     @AfterEach
     public void tearDown() {
-        instanceToTest = null;
-
         printoutBuffer = null;
         System.setOut(originalSysOut);
     }
