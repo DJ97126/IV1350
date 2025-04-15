@@ -52,7 +52,7 @@ public class Controller {
      * 
      * @return The total price of the current sale.
      */
-    public float endSale() {
+    public double endSale() {
         return sale.getTotalPrice();
     }
 
@@ -62,7 +62,7 @@ public class Controller {
      * @param amount The paid amount.
      * @return The change to be returned to the customer.
      */
-    public float finalizeSaleWithPayment(float amount) {
+    public double finalizeSaleWithPayment(double amount) {
         sale.setAmountPaid(amount);
 
         SaleDTO saleDTO = sale.getSaleInfo(amount);

@@ -1,3 +1,3 @@
 package integration;
 
-public record ItemDTO(String id, String name, float cost, float vat, String description) {}
+public record ItemDTO(String id, String name, double price, double vat, String description) {}

@@ -1,3 +1,5 @@
 package model;
 
-public record SaleInfoDTO() {}
+import integration.ItemDTO;
+
+public record SaleInfoDTO(ItemDTO currentItem, double totalPrice, double totalVat) {}
