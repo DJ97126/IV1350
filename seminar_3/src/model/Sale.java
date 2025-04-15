@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class Sale {
         BigDecimal vatPrice = itemBasePrice.multiply(vatRate);
         BigDecimal itemFullPrice = itemBasePrice.multiply(vatRate.add(BigDecimal.ONE));
 
-        totalVat = totalVat.add(vatPrice).setScale(2, RoundingMode.HALF_UP);
-        totalPrice = totalPrice.add(itemFullPrice).setScale(2, RoundingMode.HALF_UP);
+        totalVat = totalVat.add(vatPrice);
+        totalPrice = totalPrice.add(itemFullPrice);
 
         // Since item from inventory is base price, but we need to show the full price to the view.
         ItemDTO itemWithVat = new ItemDTO(boughtItem.id(), boughtItem.name(), itemFullPrice, vatRate,

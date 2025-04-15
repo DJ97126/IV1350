@@ -1,6 +1,7 @@
 package view;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import controller.Controller;
 import integration.ItemDTO;
@@ -59,6 +60,6 @@ public class View {
     }
 
     private String formatNumber(BigDecimal number) {
-        return String.format("%.2f", number).replace('.', ':');
+        return String.format("%.2f", number.setScale(2, RoundingMode.HALF_UP)).replace('.', ':');
     }
 }
