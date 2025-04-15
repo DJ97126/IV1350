@@ -1,5 +1,7 @@
 package controller;
 
+import java.math.BigDecimal;
+
 import integration.AccountingSystem;
 import integration.InventorySystem;
 import integration.ItemDTO;
@@ -52,7 +54,7 @@ public class Controller {
      * 
      * @return The total price of the current sale.
      */
-    public double endSale() {
+    public BigDecimal endSale() {
         return sale.getTotalPrice();
     }
 
@@ -62,7 +64,7 @@ public class Controller {
      * @param amount The paid amount.
      * @return The change to be returned to the customer.
      */
-    public double finalizeSaleWithPayment(double amount) {
+    public BigDecimal finalizeSaleWithPayment(BigDecimal amount) {
         sale.setAmountPaid(amount);
 
         SaleDTO saleDTO = sale.getSaleInfo(amount);

@@ -1,5 +1,7 @@
 package view;
 
+import java.math.BigDecimal;
+
 import controller.Controller;
 import integration.ItemDTO;
 import model.SaleInfoDTO;
@@ -24,13 +26,12 @@ public class View {
      */
     public void simulateExecution() {
         controller.startSale();
-        System.out.println("A new sale as been started.");
 
         displayRunningInfo(controller.enterItem("abc123"));
         displayRunningInfo(controller.enterItem("abc123"));
         displayRunningInfo(controller.enterItem("def456"));
 
-        double totalPrice = controller.endSale();
+        BigDecimal totalPrice = controller.endSale();
         System.out.println("""
                 End sale:
                 Total cost (incl VAT): %s SEK
@@ -53,11 +54,11 @@ public class View {
                 Total cost (incl VAT): %s SEK
                 Total VAT: %s SEK
                 """.formatted(currentItem.id(), currentItem.id(), currentItem.name(), formatNumber(currentItem.price()),
-                currentItem.vat() * 100, currentItem.description(), formatNumber(saleInfo.totalPrice()),
-                formatNumber(saleInfo.totalVat())));
+                currentItem.vat().multiply(BigDecimal.valueOf(100)), currentItem.description(),
+                formatNumber(saleInfo.totalPrice()), formatNumber(saleInfo.totalVat())));
     }
 
-    private String formatNumber(double number) {
+    private String formatNumber(BigDecimal number) {
         return String.format("%.2f", number).replace('.', ':');
     }
 }

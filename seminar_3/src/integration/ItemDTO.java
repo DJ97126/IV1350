@@ -1,3 +1,5 @@
 package integration;
 
-public record ItemDTO(String id, String name, double price, double vat, String description) {}
+import java.math.BigDecimal;
+
+public record ItemDTO(String id, String name, BigDecimal price, BigDecimal vat, String description) {}

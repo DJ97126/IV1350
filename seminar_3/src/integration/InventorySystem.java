@@ -1,5 +1,6 @@
 package integration;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +10,26 @@ public class InventorySystem {
     private Map<String, ItemDTO> inventory;
 
     public InventorySystem() {
-        /*
-         * Mocked inventory.
-         */
         inventory = new HashMap<>();
-        inventory.put("abc123", new ItemDTO("abc123", "BigWheel Oatmeal", 29.9 / 1.06, 0.06,
-                "BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free"));
-        inventory.put("def456", new ItemDTO("def456", "YouGoGo Blueberry", 14.9 / 1.06, 0.06,
-                "YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour"));
+        simulateInventory();
+    }
+
+    private void simulateInventory() {
+        // Reason to calculate original price is because the sample in the task seem not to have given this.
+        BigDecimal item1OriginalPrice = calculateOriginalPrice(29.9, 0.06);
+        BigDecimal item2OriginalPrice = calculateOriginalPrice(14.9, 0.06);
+
+        ItemDTO item1 = new ItemDTO("abc123", "BigWheel Oatmeal", item1OriginalPrice, BigDecimal.valueOf(0.06d),
+                "BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free");
+        ItemDTO item2 = new ItemDTO("def456", "YouGoGo Blueberry", item2OriginalPrice, BigDecimal.valueOf(0.06d),
+                "YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
+
+        inventory.put(item1.id(), item1);
+        inventory.put(item2.id(), item2);
+    }
+
+    private BigDecimal calculateOriginalPrice(double fullPrice, double vatRate) {
+        return BigDecimal.valueOf(fullPrice / (1 + vatRate));
     }
 
     public ItemDTO retrieveItem(String itemId) {

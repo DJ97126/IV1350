@@ -1,5 +1,7 @@
 package model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,26 +9,26 @@ import integration.ItemDTO;
 
 public class Sale {
     private List<ItemDTO> boughtItems;
-    private double totalPrice;
-    private double totalVat;
+    private BigDecimal totalPrice;
+    private BigDecimal totalVat;
 
     public Sale() {
         boughtItems = new ArrayList<>();
-        totalPrice = 0.0;
-        totalVat = 0.0;
+        totalPrice = BigDecimal.valueOf(0);
+        totalVat = BigDecimal.valueOf(0);
     }
 
     public SaleInfoDTO addBoughtItem(ItemDTO boughtItem) {
         boughtItems.add(boughtItem);
 
         // Feel free to implement another helper method to shorten this method for the following 4 lines.
-        double itemBasePrice = boughtItem.price();
-        double vatRate = boughtItem.vat();
-        double vatPrice = Math.round((itemBasePrice * vatRate) * 100.0) / 100.0;
-        double itemFullPrice = Math.round((itemBasePrice * (1 + vatRate)) * 100.0) / 100.0;
+        BigDecimal itemBasePrice = boughtItem.price();
+        BigDecimal vatRate = boughtItem.vat();
+        BigDecimal vatPrice = itemBasePrice.multiply(vatRate);
+        BigDecimal itemFullPrice = itemBasePrice.multiply(vatRate.add(BigDecimal.ONE));
 
-        totalVat += vatPrice;
-        totalPrice += itemFullPrice;
+        totalVat = totalVat.add(vatPrice).setScale(2, RoundingMode.HALF_UP);
+        totalPrice = totalPrice.add(itemFullPrice).setScale(2, RoundingMode.HALF_UP);
 
         // Since item from inventory is base price, but we need to show the full price to the view.
         ItemDTO itemWithVat = new ItemDTO(boughtItem.id(), boughtItem.name(), itemFullPrice, vatRate,
@@ -35,7 +37,7 @@ public class Sale {
         return new SaleInfoDTO(itemWithVat, totalPrice, totalVat);
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -43,9 +45,9 @@ public class Sale {
         return null; // Placeholder
     }
 
-    public void setAmountPaid(double amount) {}
+    public void setAmountPaid(BigDecimal amount) {}
 
-    public SaleDTO getSaleInfo(double amount) {
+    public SaleDTO getSaleInfo(BigDecimal amount) {
         return null; // Placeholder
     }
 
