@@ -11,7 +11,7 @@ import model.SaleInfoDTO;
  * This class serves as the user interface for the system.
  */
 public class View {
-    private Controller controller;
+    private final Controller controller;
 
     /**
      * Sets up the view with the given controller.
@@ -38,7 +38,7 @@ public class View {
                 Total cost (incl VAT): %s SEK
                 """.formatted(formatNumber(totalPrice)));
 
-        // controller.finalizeSaleWithPayment(100);
+        // controller.finalizeSaleWithPayment(new BigDecimal(100));
     }
 
     private void displayRunningInfo(SaleInfoDTO saleInfo) {

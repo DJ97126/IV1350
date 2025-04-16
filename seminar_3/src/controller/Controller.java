@@ -15,9 +15,9 @@ import model.SaleInfoDTO;
  * This serves as the main controller that the user interacts with the model and integration systems.
  */
 public class Controller {
-    private AccountingSystem accountingSystem;
-    private InventorySystem inventorySystem;
-    private Printer printer;
+    private final AccountingSystem accountingSystem;
+    private final InventorySystem inventorySystem;
+    private final Printer printer;
 
     private Sale sale;
 

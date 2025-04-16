@@ -7,7 +7,7 @@ import java.util.List;
 import integration.ItemDTO;
 
 public class Sale {
-    private List<ItemDTO> boughtItems;
+    private final List<ItemDTO> boughtItems;
     private BigDecimal totalPrice;
     private BigDecimal totalVat;
 
