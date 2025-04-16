@@ -1,10 +1,11 @@
 package integration;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.*;
+
+import model.SaleDTO;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountingSystemTest {
@@ -21,9 +22,12 @@ public class AccountingSystemTest {
     }
 
     @Test
-    public void testSaleIsRecorded() {
-        ItemDTO[] items = {
-            new ItemDTO("abc123", "Test Item", new BigDecimal("29.90"), new BigDecimal("0.06"), "Sample desc")
-        };
+    public void testCorrectSaleIsRecorded() {
+        ItemDTO[] items = { new ItemDTO("test1", "test", new BigDecimal("123"), new BigDecimal("0.456"), "testDesc") };
+        SaleDTO sale = new SaleDTO(items, new BigDecimal("10"));
+
+        accountingSystem.account(sale);
+        assertEquals(1, accountingSystem.recordedSales().size(), "Should contain 1 recorded sale.\n");
+        assertEquals(sale, accountingSystem.recordedSales().get(0), "Stored sale should match input.");
     }
 }
