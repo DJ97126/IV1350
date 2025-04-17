@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import static utils.StringUtils.formatBigDecimalToColon;
 
 import controller.Controller;
-import integration.ItemDTO;
-import model.SaleInfoDTO;
+import dto.ItemDTO;
+import dto.SaleInfoDTO;
 
 /**
  * This class serves as the user interface for the system.

@@ -2,14 +2,14 @@ package controller;
 
 import java.math.BigDecimal;
 
+import dto.ItemDTO;
+import dto.ReceiptDTO;
+import dto.SaleDTO;
+import dto.SaleInfoDTO;
 import integration.AccountingSystem;
 import integration.InventorySystem;
-import integration.ItemDTO;
 import integration.Printer;
-import model.ReceiptDTO;
 import model.Sale;
-import model.SaleDTO;
-import model.SaleInfoDTO;
 
 /**
  * This serves as the main controller that the user interacts with the model and integration systems.

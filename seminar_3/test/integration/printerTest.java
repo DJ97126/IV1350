@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.*;
 
-import model.ReceiptDTO;
+import dto.ItemDTO;
+import dto.ReceiptDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

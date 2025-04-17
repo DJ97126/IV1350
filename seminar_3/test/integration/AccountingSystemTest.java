@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.*;
 
-import model.SaleDTO;
+import dto.ItemDTO;
+import dto.SaleDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

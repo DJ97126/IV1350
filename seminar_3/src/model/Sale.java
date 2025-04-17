@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import integration.ItemDTO;
+import dto.ItemDTO;
+import dto.ReceiptDTO;
+import dto.SaleDTO;
+import dto.SaleInfoDTO;
 
 public class Sale {
     private final List<ItemDTO> boughtItems;

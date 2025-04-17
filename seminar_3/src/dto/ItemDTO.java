@@ -1,4 +1,4 @@
-package integration;
+package dto;
 
 import java.math.BigDecimal;
 

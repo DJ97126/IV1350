@@ -5,7 +5,8 @@ import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.SaleDTO;
+import dto.ItemDTO;
+import dto.SaleDTO;
 
 public class InventorySystem {
     private final Map<String, InventoryItem> inventory;

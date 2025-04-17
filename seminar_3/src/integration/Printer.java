@@ -6,9 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.StringUtils.formatBigDecimalToColon;
+import dto.ItemDTO;
+import dto.ReceiptDTO;
 
-import model.ReceiptDTO;
+import static utils.StringUtils.formatBigDecimalToColon;
 
 public class Printer {
     public Printer() {}

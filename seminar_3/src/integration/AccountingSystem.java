@@ -3,7 +3,7 @@ package integration;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.SaleDTO;
+import dto.SaleDTO;
 
 public class AccountingSystem {
     private final List<SaleDTO> recordedSales;
