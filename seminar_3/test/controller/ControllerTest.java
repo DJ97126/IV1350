@@ -38,6 +38,5 @@ public class ControllerTest {
 
         assertTrue(totalPrice.compareTo(BigDecimal.ZERO) == 0,
                 String.format("Total price should be 0.00 SEK for an empty sale. Currently: %.2f%n", totalPrice));
-
     }
 }

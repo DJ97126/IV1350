@@ -15,7 +15,7 @@ public class Printer {
     public Printer() {}
 
     /**
-     * Prints the receipt to the console.
+     * Prints the receipt to the console. Simulates a printer.
      * 
      * @param receiptDTO
      */

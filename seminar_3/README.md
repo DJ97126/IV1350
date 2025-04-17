@@ -4,10 +4,9 @@ This project was created using VS Code, without Maven and Gradle. The unit testi
 
 ## Folder Structure
 
-The workspace contains three folders, where:
+The workspace contains four folders, where:
 
 - `.vscode`: maintains some project settings
 - `src`: maintains source files
 - `test`: maintains unit tests
-- `lib`: maintains dependencies (put JUnit 5 `.jar` file here)
-
+- `lib` (local): maintains dependencies (put JUnit 5 `.jar` file here)
