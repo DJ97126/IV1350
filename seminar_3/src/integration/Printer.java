@@ -63,10 +63,10 @@ public class Printer {
 
     private String getFormattedReceipt(ReceiptDTO receiptDTO, String itemsString) {
         String time = receiptDTO.saleDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        String total = formatBigDecimalToColon(receiptDTO.totalPrice().setScale(2));
-        String vat = formatBigDecimalToColon(receiptDTO.totalVat().setScale(2));
-        String paid = formatBigDecimalToColon(receiptDTO.amountPaid().setScale(2));
-        String change = formatBigDecimalToColon(receiptDTO.change().setScale(2));
+        String total = formatBigDecimalToColon(receiptDTO.totalPrice());
+        String vat = formatBigDecimalToColon(receiptDTO.totalVat());
+        String paid = formatBigDecimalToColon(receiptDTO.amountPaid());
+        String change = formatBigDecimalToColon(receiptDTO.change());
 
         return """
                 ------------------ Begin receipt -------------------
