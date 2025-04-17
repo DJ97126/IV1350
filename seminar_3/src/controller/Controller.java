@@ -40,11 +40,11 @@ public class Controller {
     /**
      * Enter an item into the sale.
      * 
-     * @param itemID The ID of the item to be entered into the sale.
+     * @param itemId The ID of the item to be entered into the sale.
      * @return The current item information and running total.
      */
-    public SaleInfoDTO enterItem(String itemID) {
-        ItemDTO boughtItem = inventorySystem.retrieveItem(itemID);
+    public SaleInfoDTO enterItem(String itemId) {
+        ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
         SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
         return saleInfo;
     }

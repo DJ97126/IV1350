@@ -22,7 +22,7 @@ public class InventorySystem {
     /**
      * Retrieves the item from the inventory based on the item ID.
      * 
-     * @param itemID The ID of the item to be retrieved.
+     * @param itemId The ID of the item to be retrieved.
      * @return The object containing information about this item.
      */
     public ItemDTO retrieveItem(String itemId) {
