@@ -33,10 +33,11 @@ public class ControllerTest {
 
     @Test
     public void testEmptySale() {
-        controller.startSale(); // Indirectly also tests the startSale() method.
+        controller.startSale(); // Indirectly also tests the startSale method.
         BigDecimal totalPrice = controller.endSale();
+
         assertTrue(totalPrice.compareTo(BigDecimal.ZERO) == 0,
-                String.format("Total price should be 0.00 SEK for an empty sale. Current: %.2f\n", totalPrice));
+                String.format("Total price should be 0.00 SEK for an empty sale. Currently: %.2f%n", totalPrice));
 
     }
 }

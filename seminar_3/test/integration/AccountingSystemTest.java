@@ -22,7 +22,7 @@ public class AccountingSystemTest {
     }
 
     @Test
-    public void testCorrectSaleIsRecorded() {
+    public void testSaleAccounting() {
         ItemDTO[] items = { new ItemDTO("test1", "test", new BigDecimal("123"), new BigDecimal("0.456"), "testDesc") };
         SaleDTO sale = new SaleDTO(items, new BigDecimal("10"));
 

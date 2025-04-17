@@ -1,23 +1,109 @@
 package integration;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+import static utils.StringUtils.formatBigDecimalToColon;
+
 import model.ReceiptDTO;
 
 public class Printer {
     public Printer() {}
 
+    /**
+     * Prints the receipt to the console.
+     * 
+     * @param receiptDTO
+     */
     public void printReceipt(ReceiptDTO receiptDTO) {
-        System.out.println("""
+        Map<ItemDTO, Integer> quantizedItems = getQuantizedItems(receiptDTO);
+        String itemsString = getItemsString(quantizedItems);
+        String formattedReceipt = getFormattedReceipt(receiptDTO, itemsString);
+        System.out.println(formattedReceipt);
+    }
+
+    private Map<ItemDTO, Integer> getQuantizedItems(ReceiptDTO receiptDTO) {
+        Map<ItemDTO, Integer> itemQuantities = new HashMap<>();
+
+        for (ItemDTO item : receiptDTO.boughtItems()) {
+            itemQuantities.merge(item, 1, Integer::sum);
+        }
+
+        return itemQuantities;
+    }
+
+    private String getItemsString(Map<ItemDTO, Integer> itemQuantities) {
+        StringBuilder itemsStringBuilder = new StringBuilder();
+
+        for (Map.Entry<ItemDTO, Integer> entry : itemQuantities.entrySet()) {
+            ItemDTO item = entry.getKey();
+            int quantity = entry.getValue();
+
+            BigDecimal totalItemPrice = item.price().multiply(new BigDecimal(quantity));
+
+            String itemName = (item.name().length() > 21)
+                    ? item.name().substring(0, 19) + "..."
+                    : item.name();
+            String itemQuantity = String.valueOf(quantity);
+            String itemPrice = formatBigDecimalToColon(item.price());
+            String itemTotal = formatBigDecimalToColon(totalItemPrice);
+
+            String formattedString = """
+                    %-24s %2s x %7s %10s SEK
+                    """.formatted(itemName, itemQuantity, itemPrice, itemTotal);
+
+            itemsStringBuilder.append(formattedString);
+        }
+
+        return itemsStringBuilder.toString();
+    }
+
+    private String getFormattedReceipt(ReceiptDTO receiptDTO, String itemsString) {
+        String time = receiptDTO.saleDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        String total = formatBigDecimalToColon(receiptDTO.totalPrice().setScale(2));
+        String vat = formatBigDecimalToColon(receiptDTO.totalVat().setScale(2));
+        String paid = formatBigDecimalToColon(receiptDTO.amountPaid().setScale(2));
+        String change = formatBigDecimalToColon(receiptDTO.change().setScale(2));
+
+        return """
                 ------------------ Begin receipt -------------------
-                Time of Sale: [Time of Sale]
+                Time of Sale: %38s
 
-                [Item Name] [Item Quantity] x [Item Price] [Item Total Price] SEK
+                %s
 
-                Total: [Total Price] SEK
-                VAT: [Total VAT]
+                Total: %41s SEK
+                VAT: %43s SEK
 
-                Cash: [Cash paid] SEK
-                Change: [Change] SEK
+                Cash: %42s SEK
+                Change: %40s SEK
                 ------------------ End receipt ---------------------
-                """);
+                """.formatted(time, itemsString, total, vat, paid, change);
+    }
+
+    /* Only for debug perposes during development */
+    public static void main(String[] args) {
+        Printer printer = new Printer();
+
+        ItemDTO[] boughtItems = new ItemDTO[12];
+        for (int i = 0; i < 11; i++) {
+            boughtItems[i] = new ItemDTO("test1", "test1",
+                    new BigDecimal("12"), new BigDecimal("0.456"),
+                    "testDesc");
+        }
+        boughtItems[11] = new ItemDTO("test2", "test kinda long name item",
+                new BigDecimal("4567"), new BigDecimal("0.123"),
+                "testDesc2");
+
+        LocalDateTime saleDateTime = LocalDateTime.parse("2024-02-12T16:05");
+        BigDecimal totalPrice = new BigDecimal("74.7");
+        BigDecimal totalVat = new BigDecimal("4.23");
+        BigDecimal amountPaid = new BigDecimal("100.0");
+        BigDecimal change = new BigDecimal("25.3");
+        ReceiptDTO receipt = new ReceiptDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
+
+        printer.printReceipt(receipt);
     }
 }

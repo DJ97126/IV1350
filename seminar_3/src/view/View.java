@@ -1,7 +1,8 @@
 package view;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import static utils.StringUtils.formatBigDecimalToColon;
 
 import controller.Controller;
 import integration.ItemDTO;
@@ -32,11 +33,7 @@ public class View {
         displayRunningInfo(controller.enterItem("abc123"));
         displayRunningInfo(controller.enterItem("def456"));
 
-        BigDecimal totalPrice = controller.endSale();
-        System.out.println("""
-                End sale:
-                Total cost (incl VAT): %s SEK
-                """.formatted(formatNumber(totalPrice)));
+        displayEndSaleInfo(controller.endSale());
 
         // controller.finalizeSaleWithPayment(new BigDecimal(100));
     }
@@ -44,22 +41,32 @@ public class View {
     private void displayRunningInfo(SaleInfoDTO saleInfo) {
         ItemDTO currentItem = saleInfo.currentItem();
 
+        String id = currentItem.id();
+        String name = currentItem.name();
+        String price = formatBigDecimalToColon(currentItem.price());
+        String vat = formatBigDecimalToColon(currentItem.vat().multiply(BigDecimal.valueOf(100)));
+        String description = currentItem.description();
+        String totalPrice = formatBigDecimalToColon(saleInfo.totalPrice());
+        String totalVat = formatBigDecimalToColon(saleInfo.totalVat());
+
         System.out.println("""
                 Add 1 item with item id %s:
                 Item ID: %s
                 Item name: %s
                 Item cost: %s SEK
-                VAT: %.0f%%
+                VAT: %s%%
                 Item description: %s
 
                 Total cost (incl VAT): %s SEK
                 Total VAT: %s SEK
-                """.formatted(currentItem.id(), currentItem.id(), currentItem.name(), formatNumber(currentItem.price()),
-                currentItem.vat().multiply(BigDecimal.valueOf(100)), currentItem.description(),
-                formatNumber(saleInfo.totalPrice()), formatNumber(saleInfo.totalVat())));
+                """.formatted(id, id, name, price, vat, description, totalPrice, totalVat));
     }
 
-    private String formatNumber(BigDecimal number) {
-        return String.format("%.2f", number.setScale(2, RoundingMode.HALF_UP)).replace('.', ':');
+    private void displayEndSaleInfo(BigDecimal totalPrice) {
+        System.out.println("""
+                End sale:
+                Total cost (incl VAT): %s SEK
+                """.formatted(formatBigDecimalToColon(totalPrice)));
     }
+
 }
