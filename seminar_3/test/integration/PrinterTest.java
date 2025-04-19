@@ -12,7 +12,7 @@ import dto.ReceiptDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class printerTest {
+public class PrinterTest {
     private Printer printer;
 
     private ByteArrayOutputStream printoutBuffer;
