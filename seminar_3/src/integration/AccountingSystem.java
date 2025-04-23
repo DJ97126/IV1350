@@ -23,9 +23,4 @@ public class AccountingSystem {
     public void account(SaleDTO saleDTO) {
         recordedSales.add(saleDTO);
     }
-
-    // Package-private method for testing purposes.
-    List<SaleDTO> recordedSales() {
-        return recordedSales;
-    }
 }
