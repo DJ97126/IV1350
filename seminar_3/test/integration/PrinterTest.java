@@ -58,12 +58,21 @@ public class PrinterTest {
         printer.printReceipt(receipt);
 
         String output = printoutBuffer.toString();
+
+        // --- Debugging Step: Print the actual output ---
+        // Use originalSysOut because System.out is redirected to printoutBuffer
+        originalSysOut.println("--- Actual Printer Output ---");
+        originalSysOut.println(output);
+        originalSysOut.println("-----------------------------");
+        // --- End Debugging Step ---
+
+
         assertTrue(output.contains("Begin receipt"),
                 "Faild to print the start of receipt.");
-        assertTrue(output.contains("test kinda long nam...    1 x 4567:00    4567:00 SEK"),
+        assertTrue(output.contains("test kinda long nam...    1 x 4567:00    4567:00 SEK"), // This is line 63 (approx)
                 "Failed to print bought items.");
         assertTrue(output.contains("Change:                                    25:30 SEK"),
-                "Failed to print total price.");
+                "Failed to print total price."); // Note: The message says "total price", but it checks "Change"
         assertTrue(output.contains("End receipt"),
                 "Failed to print the end of receipt.");
     }
