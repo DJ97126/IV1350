@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 
 import dto.ItemDTO;
 import dto.ReceiptDTO;
+import dto.SaleDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,7 +54,8 @@ public class PrinterTest {
         BigDecimal totalVat = new BigDecimal("4.23");
         BigDecimal amountPaid = new BigDecimal("100.0");
         BigDecimal change = new BigDecimal("25.3");
-        ReceiptDTO receipt = new ReceiptDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
+		SaleDTO saleInfo = new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
+        ReceiptDTO receipt = new ReceiptDTO(saleInfo);
 
         printer.printReceipt(receipt);
 
