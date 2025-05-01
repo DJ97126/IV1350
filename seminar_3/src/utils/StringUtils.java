@@ -9,7 +9,7 @@ public class StringUtils {
 	/**
 	 * Formats a BigDecimal to a string with two decimal places, replacing the decimal point with a colon.
 	 * 
-	 * @param number
+	 * @param number The decimal number to format.
 	 * @return The formatted string with a colon instead of a decimal point.
 	 */
 	public static String formatBigDecimalToColon(BigDecimal number) {
