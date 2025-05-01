@@ -6,21 +6,21 @@ import java.util.List;
 import dto.SaleDTO;
 
 public class AccountingSystem {
-    private final List<SaleDTO> recordedSales;
+	private final List<SaleDTO> recordedSales;
 
-    /**
-     * Constructor for the AccountingSystem class.
-     */
-    public AccountingSystem() {
-        recordedSales = new ArrayList<SaleDTO>();
-    }
+	/**
+	 * Constructor for the AccountingSystem class.
+	 */
+	public AccountingSystem() {
+		recordedSales = new ArrayList<SaleDTO>();
+	}
 
-    /**
-     * Records the sale information in the accounting system.
-     * 
-     * @param saleDTO The sale information.
-     */
-    public void account(SaleDTO saleDTO) {
-        recordedSales.add(saleDTO);
-    }
+	/**
+	 * Records the sale information in the accounting system.
+	 * 
+	 * @param saleDTO The sale information.
+	 */
+	public void account(SaleDTO saleDTO) {
+		recordedSales.add(saleDTO);
+	}
 }
