@@ -97,7 +97,7 @@ public class Sale {
     }
 
     /**
-     * Calculates the change to return, or zero if underpaid.
+     * Calculates the change.
      *
      * @param amount The amount paid by the customer.
      * @param totalPrice The total price of the sale.
@@ -105,9 +105,6 @@ public class Sale {
      */
     private BigDecimal getChange(BigDecimal amount, BigDecimal totalPrice) {
         BigDecimal change = amount.subtract(totalPrice);
-        if (change.compareTo(BigDecimal.ZERO) < 0) {
-            change = BigDecimal.ZERO;
-        }
         return change;
     }
 
