@@ -60,11 +60,11 @@ public class PrinterTest {
 		ReceiptDTO receipt = new ReceiptDTO(saleInfo);
 
 		printer.printReceipt(receipt);
-		
+
 		String output = printoutBuffer.toString();
 		assertTrue(output.contains("Begin receipt"),
 				"Faild to print the start of receipt.");
-		assertTrue(output.contains("test kinda long nam...    1 x 5128:74    5128:74 SEK"),
+		assertTrue(output.contains("test kinda long nam...    1 x 4567:00    4567:00 SEK"),
 				"Failed to print bought items.");
 		assertTrue(output.contains("Change:                                    25:30 SEK"),
 				"Failed to print total price.");

@@ -24,6 +24,6 @@ public class Payment {
 	 */
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
-		register.updateAmount(amount);
+		register.updateAmount(this.amount);
 	}
 }

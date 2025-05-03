@@ -60,7 +60,7 @@ public class Sale {
 	 * @return the total price
 	 */
 	public BigDecimal getTotalPrice() {
-		return totalPrice;
+		return this.totalPrice;
 	}
 
 	/**

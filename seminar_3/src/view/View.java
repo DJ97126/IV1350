@@ -1,12 +1,10 @@
 package view;
 
-import java.math.BigDecimal;
-
-import static utils.StringUtils.formatBigDecimalToColon;
-
 import controller.Controller;
 import dto.ItemDTO;
 import dto.SaleInfoDTO;
+import java.math.BigDecimal;
+import static utils.StringUtils.formatBigDecimalToColon;
 
 /**
  * This class serves as the simulation of user interface for the system.
@@ -76,5 +74,5 @@ public class View {
 				Change to give the customer : %s SEK
 								""".formatted(formatBigDecimalToColon(change)));
 	}
-
+                       
 }
