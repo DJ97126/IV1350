@@ -22,7 +22,8 @@ public class Payment {
 	 * @param amount The amount paid by the customer.
 	 */
 	public void setAmount(BigDecimal amount) {
+        this.register = new Register();
 		this.amount = amount;
-		register.updateAmount(amount);
+		register.updateAmount(this.amount);
 	}
 }
