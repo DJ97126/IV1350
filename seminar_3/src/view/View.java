@@ -12,7 +12,7 @@ import dto.SaleInfoDTO;
  * This class serves as the simulation of user interface for the system.
  */
 public class View {
-	private final Controller controller;
+	private Controller controller;
 
 	/**
 	 * Sets up the view with the given controller.
