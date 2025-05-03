@@ -1,6 +1,7 @@
 package controller;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import dto.ItemDTO;
 import dto.ReceiptDTO;
@@ -55,7 +56,7 @@ public class Controller {
 	 * @return The total price of the current sale.
 	 */
 	public BigDecimal endSale() {
-		return sale.getTotalPrice();
+		return sale.getTotalPrice().setScale(2, RoundingMode.HALF_UP);
 	}
 
 	/**
@@ -74,6 +75,6 @@ public class Controller {
 		inventorySystem.updateInventory(saleDTO);
 		printer.printReceipt(receiptDTO);
 
-		return saleDTO.change();
+		return saleDTO.change().setScale(2, RoundingMode.HALF_UP);
 	}
 }

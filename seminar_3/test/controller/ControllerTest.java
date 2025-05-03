@@ -5,6 +5,9 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.*;
+
+import dto.SaleInfoDTO;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ControllerTest {
@@ -33,10 +36,37 @@ public class ControllerTest {
 
 	@Test
 	public void testEmptySale() {
-		controller.startSale(); // Indirectly also tests the startSale method.
+		controller.startSale();
 		BigDecimal totalPrice = controller.endSale();
 
-		assertTrue(totalPrice.compareTo(BigDecimal.ZERO) == 0,
-				String.format("Total price should be 0.00 SEK for an empty sale. Currently: %.2f%n", totalPrice));
+		assertTrue(totalPrice.compareTo(BigDecimal.ZERO) == 0, "Total price should be 0.00 SEK for an empty sale.");
+	}
+
+	@Test
+	public void testEnteringValidItem() {
+		controller.startSale();
+		String itemId = "abc123";
+		SaleInfoDTO saleInfo = controller.enterItem(itemId);
+
+		assertNotNull(saleInfo, "SaleInfoDTO should not be null after entering a valid item.");
+		assertNotNull(saleInfo.currentItem(), "Current item in SaleInfoDTO should not be null.");
+	}
+
+	@Test
+	public void finalizeSaleWithPayment() {
+		controller.startSale();
+
+		controller.enterItem("abc123");
+		controller.enterItem("abc123");
+		controller.enterItem("def456");
+
+		BigDecimal totalPrice = controller.endSale();
+		BigDecimal expectedTotalPrice = new BigDecimal("74.70").setScale(2);
+
+		BigDecimal change = controller.finalizeSaleWithPayment(new BigDecimal(100));
+		BigDecimal expectedChange = new BigDecimal("25.30").setScale(2);
+
+		assertEquals(0, totalPrice.compareTo(expectedTotalPrice), "Total Price should be 74.70 SEK.");
+		assertEquals(0, change.compareTo(expectedChange), "Change should be 25.30 SEK.");
 	}
 }
