@@ -105,34 +105,29 @@ public class Sale {
      * @return A saleDTO containing sale information.
      */
     public SaleDTO getSaleInfo(BigDecimal amount) {
-        // Create and return a new SaleDTO
         BigDecimal change = getChange(amount, this.totalPrice);
         return new SaleDTO(this.saleDateTime, getBoughtItems(), getTotalPrice(), this.totalVat, amount, change);
     }
 
     /**
-     * Calculates the change to be returned to the customer based on the amount
-     * paid and the total price.
+     *  Calculates the change to return, or zero if underpaid.
      *
      * @param amount The amount paid by the customer.
      * @param totalPrice The total price of the sale.
-     * @return The change to be returned to the customer, or zero if the amount
-     * paid is less than the total price.
+     * @return The change.
      */
     private BigDecimal getChange(BigDecimal amount, BigDecimal totalPrice) {
-        // Calculate change
         BigDecimal change = amount.subtract(totalPrice);
         if (change.compareTo(BigDecimal.ZERO) < 0) {
-            change = BigDecimal.ZERO; // Ensure change is not negative
+            change = BigDecimal.ZERO;
         }
         return change;
     }
 
     /**
-     * Creates a ReceiptDTO based on the current state of the sale. Assumes the
-     * sale is finalized and amount paid has been set.
+     * Returns a receipt for a finalized sale.
      *
-     * @param saleDTO containing the finalized sale details
+     * @param saleDTO The finalized sale details.
      * @return A new receipt.
      */
     public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
