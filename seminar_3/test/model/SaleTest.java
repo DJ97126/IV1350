@@ -27,7 +27,7 @@ public class SaleTest {
     public void testSaleConstructor() {
         // Test initial state after construction
         assertNotNull(saleInstance.getBoughtItems(), "Bought items list should be initialized.");
-        assertEquals(0, saleInstance.getBoughtItems().length, "Bought items list should be empty initially.");
+        assertEquals(0, saleInstance.getBoughtItems().size(), "Bought items list should be empty initially.");
         assertEquals(BigDecimal.ZERO.setScale(2), saleInstance.getTotalPrice().setScale(2), "Initial total price should be zero.");
         // Assuming totalVat is also accessible or testable indirectly
     }
@@ -54,8 +54,8 @@ public class SaleTest {
         // You might also want to check resultInfo.totalVat() if it's implemented and needed
 
         // Verify the Sale state
-        assertEquals(1, saleInstance.getBoughtItems().length, "One item should be in the bought items list.");
-        assertEquals(testItem.id(), saleInstance.getBoughtItems()[0].id(), "The correct item should be added.");
+        assertEquals(1, saleInstance.getBoughtItems().size(), "One item should be in the bought items list.");
+        assertEquals(testItem.id(), saleInstance.getBoughtItems().get(0).id(), "The correct item should be added.");
         assertEquals(expectedFullPrice.setScale(2), saleInstance.getTotalPrice().setScale(2), "Sale total price should be updated correctly.");
         // Add assertion for totalVat if accessible/needed
     }
