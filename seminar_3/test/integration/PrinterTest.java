@@ -51,13 +51,12 @@ public class PrinterTest {
 				new BigDecimal("4567"), new BigDecimal("0.123"),
 				"testDesc2"));
 
-		int saleId = 114514;
 		LocalDateTime saleDateTime = LocalDateTime.parse("2024-02-12T16:05");
 		BigDecimal totalPrice = new BigDecimal("74.7");
 		BigDecimal totalVat = new BigDecimal("4.23");
 		BigDecimal amountPaid = new BigDecimal("100.0");
 		BigDecimal change = new BigDecimal("25.3");
-		SaleDTO saleInfo = new SaleDTO(saleId, saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
+		SaleDTO saleInfo = new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
 		ReceiptDTO receipt = new ReceiptDTO(saleInfo);
 
 		printer.printReceipt(receipt);
