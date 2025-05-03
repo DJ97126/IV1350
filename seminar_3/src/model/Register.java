@@ -12,7 +12,6 @@ public class Register {
 	 * Constructor for the Register class.
 	 */
 	public Register() {
-		// Pretend we have a register with 0 kr in it.
 		this.amount = BigDecimal.valueOf(0);
 	}
 

@@ -78,7 +78,8 @@ public class Sale {
 	 * @param amount The paid amount.
 	 */
 	public void setAmountPaid(BigDecimal amount) {
-		new Payment(amount);
+		Payment payment = new Payment();
+		payment.setAmount(amount);
 	}
 
 	/**
