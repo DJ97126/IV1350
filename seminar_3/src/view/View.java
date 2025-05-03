@@ -74,5 +74,4 @@ public class View {
 				Change to give the customer : %s SEK
 								""".formatted(formatBigDecimalToColon(change)));
 	}
-                       
 }

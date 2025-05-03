@@ -57,7 +57,7 @@ public class Sale {
 	/**
 	 * Retrieves the current total price for the sale, including VAT.
 	 *
-	 * @return the total price
+	 * @return The total price.
 	 */
 	public BigDecimal getTotalPrice() {
 		return this.totalPrice;
@@ -86,19 +86,13 @@ public class Sale {
 	 * Sale information, including calculated change based on the amount paid.
 	 *
 	 * @param amount The amount paid by the customer
-	 * @return Aale information.
+	 * @return Sale information.
 	 */
 	public SaleDTO getSaleInfo(BigDecimal amount) {
 		BigDecimal change = getChange(amount);
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
 	}
 
-	/**
-	 * Calculates the change.
-	 *
-	 * @param amount The amount paid by the customer.
-	 * @return The change.
-	 */
 	private BigDecimal getChange(BigDecimal amount) {
 		BigDecimal change = amount.subtract(totalPrice);
 		return change;
