@@ -35,7 +35,7 @@ public class View {
 
         displayEndSaleInfo(controller.endSale());
 
-        // controller.finalizeSaleWithPayment(new BigDecimal(100));
+        controller.finalizeSaleWithPayment(new BigDecimal(100));
     }
 
     private void displayRunningInfo(SaleInfoDTO saleInfo) {
