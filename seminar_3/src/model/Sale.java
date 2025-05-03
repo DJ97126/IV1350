@@ -92,7 +92,7 @@ public class Sale {
      * @return Aale information.
      */
     public SaleDTO getSaleInfo(BigDecimal amount) {
-        BigDecimal change = getChange(amount, this.totalPrice);
+        BigDecimal change = getChange(amount);
         return new SaleDTO(this.saleDateTime, getBoughtItems(), getTotalPrice(), this.totalVat, amount, change);
     }
 
@@ -100,10 +100,9 @@ public class Sale {
      * Calculates the change.
      *
      * @param amount The amount paid by the customer.
-     * @param totalPrice The total price of the sale.
      * @return The change.
      */
-    private BigDecimal getChange(BigDecimal amount, BigDecimal totalPrice) {
+    private BigDecimal getChange(BigDecimal amount) {
         BigDecimal change = amount.subtract(totalPrice);
         return change;
     }
