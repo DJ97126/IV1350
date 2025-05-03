@@ -24,7 +24,8 @@ public class View {
 	}
 
 	/**
-	 * Simulates the execution of the system. This method is a placeholder for actual user interaction.
+	 * Simulates the execution of the system. 
+	 * This method is a placeholder for actual user interaction.
 	 */
 	public void simulateExecution() {
 		controller.startSale();

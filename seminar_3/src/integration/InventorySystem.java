@@ -35,6 +35,8 @@ public class InventorySystem {
 
 	/**
 	 * Updates the inventory based on the sale information. Reduces the quantity of each item sold.
+	 * This class is only for simulation purposes and does not represent the actual external inventory.
+	 * Hence it will not be tested in the test cases.
 	 * 
 	 * @param saleDTO The sale information.
 	 */
