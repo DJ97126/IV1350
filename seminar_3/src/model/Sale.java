@@ -32,7 +32,7 @@ public class Sale {
 
     /**
      * Adds a bought item to the sale and calculates the running total.
-     * 
+     *
      * @param boughtItem The item to be added to the sale.
      * @return The current item information and running total.
      */
@@ -89,7 +89,7 @@ public class Sale {
      * Sale information, including calculated change based on the amount paid.
      *
      * @param amount The amount paid by the customer
-     * @return A saleDTO containing sale information.
+     * @return Aale information.
      */
     public SaleDTO getSaleInfo(BigDecimal amount) {
         BigDecimal change = getChange(amount, this.totalPrice);
@@ -97,7 +97,7 @@ public class Sale {
     }
 
     /**
-     *  Calculates the change to return, or zero if underpaid.
+     * Calculates the change to return, or zero if underpaid.
      *
      * @param amount The amount paid by the customer.
      * @param totalPrice The total price of the sale.
