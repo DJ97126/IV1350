@@ -24,8 +24,7 @@ public class View {
 	}
 
 	/**
-	 * Simulates the execution of the system. 
-	 * This method is a placeholder for actual user interaction.
+	 * Simulates the execution of the system. This method is a placeholder for actual user interaction.
 	 */
 	public void simulateExecution() {
 		controller.startSale();
@@ -34,9 +33,11 @@ public class View {
 		displayRunningInfo(controller.enterItem("abc123"));
 		displayRunningInfo(controller.enterItem("def456"));
 
-		displayEndSaleInfo(controller.endSale());
+		BigDecimal totalPrice = controller.endSale();
+		displayEndSaleInfo(totalPrice);
 
-		controller.finalizeSaleWithPayment(new BigDecimal(100));
+		BigDecimal change = controller.finalizeSaleWithPayment(new BigDecimal(100));
+		displayChangeInfo(change);
 	}
 
 	private void displayRunningInfo(SaleInfoDTO saleInfo) {
@@ -68,6 +69,12 @@ public class View {
 				End sale:
 				Total cost (incl VAT): %s SEK
 				""".formatted(formatBigDecimalToColon(totalPrice)));
+	}
+
+	private void displayChangeInfo(BigDecimal change) {
+		System.out.println("""
+				Change to give the customer : %s SEK
+								""".formatted(formatBigDecimalToColon(change)));
 	}
 
 }
