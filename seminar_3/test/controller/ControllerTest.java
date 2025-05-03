@@ -53,7 +53,7 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void finalizeSaleWithPayment() {
+	public void testFinalizeSaleWithPayment() {
 		controller.startSale();
 
 		controller.enterItem("abc123");
