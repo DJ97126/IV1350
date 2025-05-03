@@ -41,51 +41,28 @@ public class Sale {
     public SaleInfoDTO addBoughtItem(ItemDTO boughtItem) {
 
         boughtItems.add(boughtItem);
-        // prices[0] will be itemFullPrice, prices[1] will be item's vatRate
         BigDecimal[] prices = calculatePrices(boughtItem);
         BigDecimal itemFullPrice = prices[0];
-        BigDecimal itemVatRate = prices[1]; // Use the item's actual VAT rate
+        BigDecimal itemVatRate = prices[1];
 
-        // Since item from inventory is base price, but we need to show the full price to the view.
-        // Use the correctly calculated itemFullPrice and the item's original vatRate
         ItemDTO itemWithVat = new ItemDTO(boughtItem.id(), boughtItem.name(), itemFullPrice, itemVatRate,
                 boughtItem.description());
 
         return new SaleInfoDTO(itemWithVat, getTotalPrice(), this.totalVat);
     }
 
-    /**
-     * Computes the full price of an item by applying VAT to its base price.
-     *
-     * @param item The bought item.
-     * @return An array containing the item's full price at index 0. and the
-     * item's VAT rate at index 1.
-     */
     private BigDecimal[] calculatePrices(ItemDTO item) {
         BigDecimal itemFullPrice = priceWithVat(item);
         includeItemInTotals(item, itemFullPrice);
         return new BigDecimal[]{itemFullPrice, item.vat()};
     }
 
-    /**
-     * Calculates the full price (base price + VAT amount) for a single item.
-     *
-     * @param item The bought item.
-     * @return The calculated full price as a {@link BigDecimal}.
-     */
     private BigDecimal priceWithVat(ItemDTO item) {
         BigDecimal basePrice = item.price();
         BigDecimal vat = item.vat();
         return basePrice.add(basePrice.multiply(vat));
     }
 
-    /**
-     * Updates the running totals of the sale by adding the item's full price
-     * and VAT amount.
-     *
-     * @param item The bought item.
-     * @param fullPrice The calculated full price of the added item.
-     */
     private void includeItemInTotals(ItemDTO item, BigDecimal fullPrice) {
         BigDecimal vatAmount = fullPrice.subtract(item.price());
         this.totalVat = totalVat.add(vatAmount);
@@ -95,29 +72,26 @@ public class Sale {
     /**
      * Retrieves the current total price for the sale, including VAT.
      *
-     * @return The total price as a {@link BigDecimal}.
+     * @return the total price
      */
     public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
     /**
-     * Retrieves all items that have been added to the sale so far.
+     * Retrieves all items that have been added to the sale.
      *
-     * @return An array of {@link ItemDTO} objects representing the bought
-     * items. Returns an empty array if no items have been added.
+     * @return the bought items. Returns an empty array if no items have been
+     * added.
      */
     public ItemDTO[] getBoughtItems() {
         return boughtItems.toArray(ItemDTO[]::new);
     }
 
     /**
-     * Processes the amount paid by the customer. Validates the amount and then
-     * creates a new Payment object to hold this amount. Note: This
-     * implementation does not store the amount directly within the Sale object
-     * itself.
+     * Creates a payment with the specified amount.
      *
-     * @param amount The amount paid as a {@link BigDecimal}. Should not be
+     * @param amount The paid amount
      * @return A new payment
      */
     public Payment setAmountPaid(BigDecimal amount) {
@@ -155,8 +129,8 @@ public class Sale {
     }
 
     /**
-     * Creates a {@link ReceiptDTO} based on the current state of the sale.
-     * Assumes the sale is finalized and amount paid has been set.
+     * Creates a ReceiptDTO based on the current state of the sale. Assumes the
+     * sale is finalized and amount paid has been set.
      *
      * @param saleDTO containing the finalized sale details
      * @return A new receipt.
