@@ -48,13 +48,14 @@ public class Printer {
 			ItemDTO item = entry.getKey();
 			int quantity = entry.getValue();
 
-			BigDecimal totalItemPrice = item.price().multiply(new BigDecimal(quantity));
+			BigDecimal priceWithVat = item.price().multiply(item.vat().add(BigDecimal.ONE));
+			BigDecimal totalItemPrice = priceWithVat.multiply(new BigDecimal(quantity));
 
 			String itemName = (item.name().length() > 21)
 					? item.name().substring(0, 19) + "..."
 					: item.name();
 			String itemQuantity = String.valueOf(quantity);
-			String itemPrice = formatBigDecimalToColon(item.price());
+			String itemPrice = formatBigDecimalToColon(priceWithVat);
 			String itemTotal = formatBigDecimalToColon(totalItemPrice);
 
 			String formattedString = """
