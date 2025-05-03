@@ -31,42 +31,29 @@ public class Sale {
     }
 
     /**
-     * Adds a specified item to the current sale and updates the running total
-     * price and VAT.
-     *
-     * @param boughtItem the item to be added.
-     * @return A details of the added item (with full price) and the updated
-     * running total price and VAT for the sale.
+     * Adds a bought item to the sale and calculates the running total.
+     * 
+     * @param boughtItem The item to be added to the sale.
+     * @return The current item information and running total.
      */
     public SaleInfoDTO addBoughtItem(ItemDTO boughtItem) {
-
         boughtItems.add(boughtItem);
-        BigDecimal[] prices = calculatePrices(boughtItem);
-        BigDecimal itemFullPrice = prices[0];
-        BigDecimal itemVatRate = prices[1];
+        ItemDTO itemWithVat = calculateRunningTotal(boughtItem);
 
-        ItemDTO itemWithVat = new ItemDTO(boughtItem.id(), boughtItem.name(), itemFullPrice, itemVatRate,
-                boughtItem.description());
-
-        return new SaleInfoDTO(itemWithVat, getTotalPrice(), this.totalVat);
+        return new SaleInfoDTO(itemWithVat, totalPrice, totalVat);
     }
 
-    private BigDecimal[] calculatePrices(ItemDTO item) {
-        BigDecimal itemFullPrice = priceWithVat(item);
-        includeItemInTotals(item, itemFullPrice);
-        return new BigDecimal[]{itemFullPrice, item.vat()};
-    }
+    private ItemDTO calculateRunningTotal(ItemDTO boughtItem) {
+        BigDecimal itemBasePrice = boughtItem.price();
+        BigDecimal vatRate = boughtItem.vat();
+        BigDecimal vatPrice = itemBasePrice.multiply(vatRate);
+        // Since item from inventory is base price, but we need to show the full price to the view.
+        BigDecimal itemFullPrice = itemBasePrice.multiply(vatRate.add(BigDecimal.ONE));
 
-    private BigDecimal priceWithVat(ItemDTO item) {
-        BigDecimal basePrice = item.price();
-        BigDecimal vat = item.vat();
-        return basePrice.add(basePrice.multiply(vat));
-    }
+        totalVat = totalVat.add(vatPrice);
+        totalPrice = totalPrice.add(itemFullPrice);
 
-    private void includeItemInTotals(ItemDTO item, BigDecimal fullPrice) {
-        BigDecimal vatAmount = fullPrice.subtract(item.price());
-        this.totalVat = totalVat.add(vatAmount);
-        this.totalPrice = totalPrice.add(fullPrice);
+        return new ItemDTO(boughtItem.id(), boughtItem.name(), itemFullPrice, vatRate, boughtItem.description());
     }
 
     /**
