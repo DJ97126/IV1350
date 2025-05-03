@@ -13,6 +13,7 @@ public class Payment {
 	 * Constructor for the Payment class. Initializes the amount to 0.
 	 */
 	public Payment() {
+		this.register = new Register();
 		this.amount = BigDecimal.valueOf(0);
 	}
 
@@ -22,7 +23,6 @@ public class Payment {
 	 * @param amount The amount paid by the customer.
 	 */
 	public void setAmount(BigDecimal amount) {
-        this.register = new Register();
 		this.amount = amount;
 		register.updateAmount(this.amount);
 	}

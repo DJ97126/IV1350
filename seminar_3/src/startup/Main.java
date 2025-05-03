@@ -8,14 +8,14 @@ import view.View;
  */
 public class Main {
 
-    /**
-     * The main method that starts the application.
-     *
-     * @param args Command-line arguments (not used).
-     */
-    public static void main(String[] args) {
-        Controller controller = new Controller();
-        View view = new View(controller);
-        view.simulateExecution();
-    }
+	/**
+	 * The main method that starts the application.
+	 *
+	 * @param args Command-line arguments (not used).
+	 */
+	public static void main(String[] args) {
+		Controller controller = new Controller();
+		View view = new View(controller);
+		view.simulateExecution();
+	}
 }
