@@ -8,6 +8,10 @@ import java.util.Map;
 import dto.ItemDTO;
 import dto.SaleDTO;
 
+/**
+ * This class simulates an inventory system that stores the items available for sale. 
+ * It provides methods to retrieve item information and update the inventory based on sales.
+ */
 public class InventorySystem {
 	private final Map<String, InventoryItem> inventory;
 
@@ -41,7 +45,7 @@ public class InventorySystem {
 		}
 	}
 
-	/* Below are only simulation code, which will not be actually documented. */
+	/* Below are only simulation code. */
 	private static class InventoryItem {
 		private final ItemDTO item;
 		private int quantity;

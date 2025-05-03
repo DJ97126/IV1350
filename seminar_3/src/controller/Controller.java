@@ -12,7 +12,7 @@ import integration.Printer;
 import model.Sale;
 
 /**
- * This serves as the main controller that the user interacts with the model and integration systems.
+ * This serves as the main controller that the cashier interacts with the model and integration systems.
  */
 public class Controller {
 	private final AccountingSystem accountingSystem;

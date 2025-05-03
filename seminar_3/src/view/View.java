@@ -9,7 +9,7 @@ import dto.ItemDTO;
 import dto.SaleInfoDTO;
 
 /**
- * This class serves as the user interface for the system.
+ * This class serves as the simulation of user interface for the system.
  */
 public class View {
 	private final Controller controller;
@@ -35,7 +35,7 @@ public class View {
 
 		displayEndSaleInfo(controller.endSale());
 
-		// controller.finalizeSaleWithPayment(new BigDecimal(100));
+		controller.finalizeSaleWithPayment(new BigDecimal(100));
 	}
 
 	private void displayRunningInfo(SaleInfoDTO saleInfo) {
