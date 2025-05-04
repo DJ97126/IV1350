@@ -18,7 +18,7 @@ public class Sale {
 	private BigDecimal totalPrice;
 	private BigDecimal totalVat;
 
-    private Payment payment;
+	private Payment payment;
 
 	/**
 	 * Creates a new, empty Sale instance. Initializes totals to zero.
@@ -62,14 +62,14 @@ public class Sale {
 	 * @return The total price.
 	 */
 	public BigDecimal getTotalPrice() {
-        this.payment = new Payment();
+		this.payment = new Payment();
 		return this.totalPrice;
 	}
 
 	/**
 	 * Retrieves all items that have been added to the sale.
 	 *
-	 * @return The bought items. Returns an empty array if no items have been added.
+	 * @return The bought items. Returns an empty list if no items have been added.
 	 */
 	public List<ItemDTO> getBoughtItems() {
 		return this.boughtItems;
