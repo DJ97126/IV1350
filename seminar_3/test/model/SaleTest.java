@@ -43,16 +43,18 @@ public class SaleTest {
 
 		SaleInfoDTO resultInfo = saleInstance.addBoughtItem(testItem);
 
-		assertNotNull(resultInfo, "Returned SaleInfoDTO should not be null.");
+		assertNotNull(resultInfo, 
+            "Returned SaleInfoDTO should not be null.");
 		assertEquals(expectedFullPrice.setScale(2), resultInfo.currentItem().price().setScale(2),
-				"Returned item DTO should have the full price.");
+			"Returned item DTO should have the full price.");
 		assertEquals(expectedFullPrice.setScale(2), resultInfo.totalPrice().setScale(2),
-				"Returned running total should match the item's full price.");
-
-		assertEquals(1, saleInstance.getBoughtItems().size(), "One item should be in the bought items list.");
-		assertEquals(testItem.id(), saleInstance.getBoughtItems().get(0).id(), "The correct item should be added.");
+			"Returned running total should match the item's full price.");
+		assertEquals(1, saleInstance.getBoughtItems().size(),
+            "One item should be in the bought items list.");
+		assertEquals(testItem.id(), saleInstance.getBoughtItems().get(0).id(),
+            "The correct item should be added.");
 		assertEquals(expectedFullPrice.setScale(2), saleInstance.getTotalPrice().setScale(2),
-				"Sale total price should be updated correctly.");
+			"Sale total price should be updated correctly.");
 	}
 
 	@Test
@@ -76,12 +78,18 @@ public class SaleTest {
 
 		List<ItemDTO> items = saleInstance.getBoughtItems();
 
-		assertEquals(5, items.size());
-		assertEquals("item1", items.get(0).id());
-		assertEquals("Test Item 2", items.get(1).name());
-		assertEquals(new BigDecimal("30.00"), items.get(2).price().setScale(2));
-		assertEquals(new BigDecimal("0.10"), items.get(3).vat().setScale(2));
-		assertEquals("Test item number five", items.get(4).description());
+		assertEquals(5, items.size(),
+            "Failed to add Items");
+		assertEquals("item1", items.get(0).id(),
+            "Failed to read Item ID");
+		assertEquals("Test Item 2", items.get(1).name(),
+            "Failed to read Item name");
+		assertEquals(new BigDecimal("30.00"), items.get(2).price().setScale(2),
+            "Failed to read Item price");
+		assertEquals(new BigDecimal("0.10"), items.get(3).vat().setScale(2),
+            "Failed to read Item VAT");
+		assertEquals("Test item number five", items.get(4).description(),
+            "Failed to read Item description");
 	}
 
 	@Test
@@ -92,9 +100,12 @@ public class SaleTest {
 		BigDecimal paid = new BigDecimal("20.00");
 		SaleDTO saleDTO = saleInstance.getSaleInfo(paid);
 
-		assertEquals(paid, saleDTO.amountPaid());
-		assertEquals(new BigDecimal("12.50"), saleDTO.totalPrice().setScale(2));
-		assertEquals(new BigDecimal("7.50"), saleDTO.change().setScale(2));
+		assertEquals(paid, saleDTO.amountPaid(),
+            "Fail to read amount paid");
+		assertEquals(new BigDecimal("12.50"), saleDTO.totalPrice().setScale(2),
+            "Failed to calculate total price");
+		assertEquals(new BigDecimal("7.50"), saleDTO.change().setScale(2),
+            "Failed to calculate change");
 	}
 
 	@Test
@@ -105,7 +116,9 @@ public class SaleTest {
 
 		ReceiptDTO receipt = saleInstance.getReceiptInfo(saleDTO);
 
-		assertNotNull(receipt);
-		assertEquals(saleDTO, receipt.sale());
+		assertNotNull(receipt,
+            "Failed to generate receipt");
+		assertEquals(saleDTO, receipt.sale(),
+            "Failed to transfer saleDTO correctly to receipt");
 	}
 }
