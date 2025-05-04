@@ -87,7 +87,7 @@ public class Sale {
 	/**
 	 * Sale information, including calculated change based on the amount paid.
 	 *
-	 * @param amount The amount paid by the customer
+	 * @param amount The amount paid by the customer.
 	 * @return Sale information.
 	 */
 	public SaleDTO getSaleInfo(BigDecimal amount) {
