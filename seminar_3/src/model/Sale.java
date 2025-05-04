@@ -18,6 +18,8 @@ public class Sale {
 	private BigDecimal totalPrice;
 	private BigDecimal totalVat;
 
+    private Payment payment;
+
 	/**
 	 * Creates a new, empty Sale instance. Initializes totals to zero.
 	 */
@@ -60,6 +62,7 @@ public class Sale {
 	 * @return The total price.
 	 */
 	public BigDecimal getTotalPrice() {
+        this.payment = new Payment();
 		return this.totalPrice;
 	}
 
@@ -78,7 +81,6 @@ public class Sale {
 	 * @param amount The paid amount.
 	 */
 	public void setAmountPaid(BigDecimal amount) {
-		Payment payment = new Payment();
 		payment.setAmount(amount);
 	}
 
