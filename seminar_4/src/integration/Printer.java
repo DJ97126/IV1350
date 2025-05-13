@@ -12,11 +12,10 @@ import dto.SaleDTO;
 import static utils.StringUtils.formatBigDecimalToColon;
 
 /**
- * This class simulates a printer that prints the receipt to the console.
+ * This class simulates a printer that prints the receipt to the console. 
  * It formats the receipt with the sale information and item details.
  */
 public class Printer {
-	public Printer() {}
 
 	/**
 	 * Prints the receipt to the console. Simulates a printer.

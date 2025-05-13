@@ -7,11 +7,10 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
- * This class contains utility methods for string formatting.
- * It is used to format decimal numbers to a specific string format.
+ * This class contains utility methods for string formatting. It is used to format decimal numbers to a specific string
+ * format.
  */
 public class StringUtils {
-	public StringUtils() {}
 
 	/**
 	 * Formats a BigDecimal to a string with two decimal places, replacing the decimal point with a colon.
