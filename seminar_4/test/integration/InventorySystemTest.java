@@ -65,8 +65,8 @@ public class InventorySystemTest {
 	}
 
 	@Test
-	void testDatabaseFailureExceptionFromInvalidId() {
-		Exception exception = assertThrows(DatabaseFailureException.class, () -> {
+	void testInventorySystemExceptionDatabaseFailure() {
+		Exception exception = assertThrows(InventorySystemException.class, () -> {
 			inventorySystem.retrieveItem("fail114514");
 		});
 		assertTrue(exception.getMessage().contains("Database server is not running."));
