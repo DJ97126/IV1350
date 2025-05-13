@@ -27,15 +27,20 @@ public class InventorySystem {
 	 * Retrieves the item from the inventory based on the item ID.
 	 * 
 	 * @param itemId The ID of the item to be retrieved.
-	 * @return The object containing information about this item.
+	 * @return The object containing information about this item. Null if not found.
+	 * @throws DatabaseFailureException If the database server is not running.
 	 */
-	public ItemDTO retrieveItem(String itemId) {
-		return inventory.get(itemId).item;
+	public ItemDTO retrieveItem(String itemId) throws DatabaseFailureException {
+		if ("fail114514".equals(itemId)) {
+			throw new DatabaseFailureException("Database server is not running.");
+		}
+		InventoryItem item = inventory.get(itemId);
+		return item != null ? item.item : null;
 	}
 
 	/**
-	 * Updates the inventory based on the sale information. Reduces the quantity of each item sold.
-	 * This class is only for simulation purposes and does not represent the actual external inventory.
+	 * Updates the inventory based on the sale information. Reduces the quantity of each item sold. 
+	 * This class is only for simulation purposes and does not represent the actual external inventory. 
 	 * Hence it will not be tested in the test cases.
 	 * 
 	 * @param saleDTO The sale information.

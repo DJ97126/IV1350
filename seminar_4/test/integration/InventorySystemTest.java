@@ -37,7 +37,6 @@ public class InventorySystemTest {
 
 	@Test
 	public void testInventorySystemRetrieveItem() {
-		/* Same as from inventory */
 		BigDecimal item1OriginalPrice = calculateOriginalPrice(new BigDecimal("29.9"), new BigDecimal("0.06"));
 		BigDecimal item2OriginalPrice = calculateOriginalPrice(new BigDecimal("14.9"), new BigDecimal("0.06"));
 
@@ -48,7 +47,6 @@ public class InventorySystemTest {
 				BigDecimal.valueOf(0.06d),
 				"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
 
-		/* The actual test part */
 		String itemId1 = "abc123";
 		String itemId2 = "def456";
 
@@ -64,5 +62,13 @@ public class InventorySystemTest {
 
 	private BigDecimal calculateOriginalPrice(BigDecimal fullPrice, BigDecimal vatRate) {
 		return fullPrice.divide(vatRate.add(BigDecimal.ONE), MathContext.DECIMAL128);
+	}
+
+	@Test
+	void testDatabaseFailureExceptionFromInvalidId() {
+		Exception exception = assertThrows(DatabaseFailureException.class, () -> {
+			inventorySystem.retrieveItem("fail114514");
+		});
+		assertTrue(exception.getMessage().contains("Database server is not running."));
 	}
 }
