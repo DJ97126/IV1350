@@ -1,5 +1,6 @@
 package model;
 
+import dto.DiscountDTO;
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
@@ -13,7 +14,6 @@ import java.util.List;
  * Represents a sale transaction, holding information about items purchased and totals.
  */
 public class Sale {
-
 	private final LocalDateTime saleDateTime;
 	private final List<ItemDTO> boughtItems;
 	private BigDecimal totalPrice;
