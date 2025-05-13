@@ -1,8 +1,7 @@
 package integration;
 
 /**
- * Thrown when the inventory database cannot be reached or is unavailable. 
- * This simulates a database failure, such as the server not running.
+ * Thrown when the inventory database cannot be reached or is unavailable.
  */
 public class InventorySystemException extends RuntimeException {
 
