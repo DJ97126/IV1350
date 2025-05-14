@@ -11,7 +11,7 @@ import java.time.format.FormatStyle;
  * This class is responsible for the log.
  */
 public class LogHandler {
-	private static final String LOG_FILE_NAME = "exceptions-log.txt";
+	private static final String LOG_FILE_NAME = "exceptions.log";
 	private static final LogHandler INSTANCE = new LogHandler();
 	private PrintWriter logFile;
 

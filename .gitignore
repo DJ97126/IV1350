@@ -8,3 +8,4 @@ javadoc/
 *.pdf
 *.lock
 *.bak
+*.log
