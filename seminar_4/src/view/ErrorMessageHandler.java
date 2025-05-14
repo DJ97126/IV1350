@@ -14,12 +14,9 @@ class ErrorMessageHandler {
 	 * 
 	 * @param message The error message.
 	 */
-	void showErrorMsg(String message) {
-		StringBuilder errorMsgBuilder = new StringBuilder();
-		errorMsgBuilder.append(createTime());
-		errorMsgBuilder.append(", ERROR: ");
-		errorMsgBuilder.append(message);
-		System.out.println(errorMsgBuilder);
+	void showErrorMessage(String message) {
+		String errorMessage = "%s, ERROR: %s".formatted(createTime(), message);
+		System.out.println(errorMessage);
 	}
 
 	private String createTime() {

@@ -82,7 +82,7 @@ public class View {
 	}
 
 	private void writeToLogAndUI(String uiMessage, Exception exception) {
-		errorMsgHandler.showErrorMsg(uiMessage);
+		errorMsgHandler.showErrorMessage(uiMessage);
 		logger.logException(exception);
 	}
 }
