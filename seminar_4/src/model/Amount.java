@@ -144,12 +144,15 @@ public class Amount {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		if (this == other)
+		if (this == other) {
 			return true;
-		if (!(other instanceof Amount))
+		}
+		if (!(other instanceof Amount)) {
 			return false;
-		Amount amount1 = (Amount) other;
-		return amount.compareTo(amount1.amount) == 0;
+		}
+
+		Amount otherAmount = (Amount) other;
+		return amount.compareTo(otherAmount.amount) == 0;
 	}
 
 	@Override
