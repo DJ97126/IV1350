@@ -2,7 +2,6 @@ package integration;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Map;
 
 import dto.ItemDTO;
 import dto.ReceiptDTO;
@@ -21,14 +20,14 @@ public class Printer {
 	 */
 	public void printReceipt(ReceiptDTO receiptDTO) {
 		SaleDTO saleInformation = receiptDTO.sale();
-		Map<ItemDTO, Integer> quantizedItems = getQuantizedItems(saleInformation);
+		HashMap<ItemDTO, Integer> quantizedItems = getQuantizedItems(saleInformation);
 		String itemsString = getItemsString(quantizedItems);
 		String formattedReceipt = getFormattedReceipt(saleInformation, itemsString);
 		System.out.println(formattedReceipt);
 	}
 
-	private Map<ItemDTO, Integer> getQuantizedItems(SaleDTO saleInfo) {
-		Map<ItemDTO, Integer> itemQuantities = new HashMap<>();
+	private HashMap<ItemDTO, Integer> getQuantizedItems(SaleDTO saleInfo) {
+		HashMap<ItemDTO, Integer> itemQuantities = new HashMap<>();
 
 		for (ItemDTO item : saleInfo.boughtItems()) {
 			itemQuantities.merge(item, 1, Integer::sum);
@@ -37,10 +36,10 @@ public class Printer {
 		return itemQuantities;
 	}
 
-	private String getItemsString(Map<ItemDTO, Integer> itemQuantities) {
+	private String getItemsString(HashMap<ItemDTO, Integer> itemQuantities) {
 		StringBuilder itemsStringBuilder = new StringBuilder();
 
-		for (Map.Entry<ItemDTO, Integer> entry : itemQuantities.entrySet()) {
+		for (HashMap.Entry<ItemDTO, Integer> entry : itemQuantities.entrySet()) {
 			ItemDTO item = entry.getKey();
 			int quantity = entry.getValue();
 

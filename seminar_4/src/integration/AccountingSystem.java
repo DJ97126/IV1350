@@ -17,7 +17,7 @@ public class AccountingSystem {
 	 * Constructor for the AccountingSystem class.
 	 */
 	public AccountingSystem() {
-		recordedSales = new ArrayList<SaleDTO>();
+		recordedSales = new ArrayList<>();
 	}
 
 	/**

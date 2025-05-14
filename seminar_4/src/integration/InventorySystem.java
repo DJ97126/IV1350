@@ -1,7 +1,6 @@
 package integration;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import dto.ItemDTO;
 import dto.SaleDTO;
@@ -12,13 +11,13 @@ import model.Amount;
  * It provides methods to retrieve item information and update the inventory based on sales.
  */
 public class InventorySystem {
-	private final Map<String, InventoryItem> inventory;
+	private final HashMap<String, InventoryItem> inventory;
 
 	/**
 	 * Constructor for the InventorySystem class.
 	 */
 	public InventorySystem() {
-		inventory = new HashMap<String, InventoryItem>();
+		inventory = new HashMap<>();
 		simulateInventory();
 	}
 
