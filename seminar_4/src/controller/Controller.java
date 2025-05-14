@@ -9,6 +9,7 @@ import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import integration.AccountingSystem;
 import integration.InventorySystem;
+import integration.InventorySystemException;
 import integration.Printer;
 import model.Sale;
 
@@ -43,11 +44,17 @@ public class Controller {
 	 * 
 	 * @param itemId The ID of the item to be entered into the sale.
 	 * @return The current item information and running total.
+	 * @throws RuntimeException if the item cannot be retrieved due to inventory system failure.
 	 */
 	public SaleInfoDTO enterItem(String itemId) {
-		ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
-		SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
-		return saleInfo;
+		try {
+			ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
+			SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
+			return saleInfo;
+		} catch (InventorySystemException e) {
+			System.err.println(e.getMessage());
+			throw new RuntimeException("Could not retrieve item information. Please try again later.");
+		}
 	}
 
 	/**
