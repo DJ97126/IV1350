@@ -6,7 +6,8 @@ import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import integration.AccountingSystem;
 import integration.InventorySystem;
-import integration.InventorySystemException;
+import integration.ItemNotFoundException;
+import integration.DatabaseFailureException;
 import integration.Printer;
 import model.Amount;
 import model.Sale;
@@ -44,16 +45,20 @@ public class Controller {
 	 * 
 	 * @param itemId The ID of the item to be entered into the sale.
 	 * @return The current item information and running total.
-	 * @throws RuntimeException if the item cannot be retrieved due to inventory system failure.
+	 * @throws DatabaseFailureException if the item cannot be retrieved due to inventory system failure.
+	 * @throws ItemNotFoundException    if the item is not found in the inventory.
 	 */
 	public SaleInfoDTO enterItem(String itemId) {
 		try {
 			ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
 			SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
 			return saleInfo;
-		} catch (InventorySystemException e) {
+		} catch (DatabaseFailureException e) {
 			logger.logException(e);
 			throw new RuntimeException("Could not retrieve item information. Please try again later.");
+		} catch (ItemNotFoundException e) {
+			logger.logException(e);
+			throw new RuntimeException("Item not found. Please check the item ID.");
 		}
 	}
 

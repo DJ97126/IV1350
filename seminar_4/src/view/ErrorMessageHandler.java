@@ -8,7 +8,6 @@ import java.time.format.FormatStyle;
  * This class is responsible for showing error messages to the user.
  */
 class ErrorMessageHandler {
-
 	/**
 	 * Displays the specified error message.
 	 * 

@@ -14,7 +14,6 @@ import model.Amount;
  * It formats the receipt with the sale information and item details.
  */
 public class Printer {
-
 	/**
 	 * Prints the receipt to the console. Simulates a printer.
 	 * 

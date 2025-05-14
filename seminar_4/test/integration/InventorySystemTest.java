@@ -34,25 +34,23 @@ public class InventorySystemTest {
 	}
 
 	@Test
-	public void testInventorySystemRetrieveItem() {
+	public void testInventorySystemRetrieveItem() throws DatabaseFailureException, ItemNotFoundException {
 		Amount vatAmount = new Amount("0.06");
 		Amount item1OriginalPrice = calculateOriginalPrice(new Amount("29.9"), vatAmount);
 		Amount item2OriginalPrice = calculateOriginalPrice(new Amount("14.9"), vatAmount);
 
 		ItemDTO expectedItem1 = new ItemDTO(
-			"abc123",
-			"BigWheel Oatmeal",
-			item1OriginalPrice,
-			vatAmount,
-			"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free"
-		);
+				"abc123",
+				"BigWheel Oatmeal",
+				item1OriginalPrice,
+				vatAmount,
+				"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free");
 		ItemDTO expectedItem2 = new ItemDTO(
-			"def456",
-			"YouGoGo Blueberry",
-			item2OriginalPrice,
-			vatAmount,
-			"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour"
-		);
+				"def456",
+				"YouGoGo Blueberry",
+				item2OriginalPrice,
+				vatAmount,
+				"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
 
 		String itemId1 = "abc123";
 		String itemId2 = "def456";
@@ -74,9 +72,18 @@ public class InventorySystemTest {
 
 	@Test
 	void testInventorySystemExceptionDatabaseFailure() {
-		Exception exception = assertThrows(InventorySystemException.class, () -> {
+		Exception exception = assertThrows(DatabaseFailureException.class, () -> {
 			inventorySystem.retrieveItem("fail114514");
 		});
 		assertTrue(exception.getMessage().contains("Database server is not running."));
+	}
+
+	@Test
+	void testInventorySystemThrowsItemNotFoundException() {
+		String invalidItemId = "nonexistent123";
+		Exception exception = assertThrows(ItemNotFoundException.class, () -> {
+			inventorySystem.retrieveItem(invalidItemId);
+		});
+		assertTrue(exception.getMessage().contains(invalidItemId));
 	}
 }

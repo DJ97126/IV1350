@@ -7,7 +7,6 @@ import view.View;
  * This class serves as the entry point for the application.
  */
 public class Main {
-
 	/**
 	 * The main method that starts the application.
 	 *

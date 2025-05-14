@@ -27,14 +27,20 @@ public class InventorySystem {
 	 * 
 	 * @param itemId The ID of the item to be retrieved.
 	 * @return The object containing information about this item. Null if not found.
-	 * @throws InventorySystemException If the database server is not running.
+	 * @throws DatabaseFailureException If the database server is not running.
 	 */
-	public ItemDTO retrieveItem(String itemId) throws InventorySystemException {
+	public ItemDTO retrieveItem(String itemId) throws DatabaseFailureException, ItemNotFoundException {
 		if ("fail114514".equals(itemId)) {
-			throw new InventorySystemException("Database server is not running.");
+			throw new DatabaseFailureException("Database server is not running.");
 		}
+
 		InventoryItem item = inventory.get(itemId);
-		return item != null ? item.item : null;
+
+		if (item == null) {
+			throw new ItemNotFoundException(itemId);
+		}
+		
+		return item.item;
 	}
 
 	/**

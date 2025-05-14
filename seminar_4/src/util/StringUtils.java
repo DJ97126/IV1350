@@ -11,7 +11,6 @@ import java.util.Locale;
  * format.
  */
 public class StringUtils {
-
 	/**
 	 * Formats a BigDecimal to a string with two decimal places, replacing the decimal point with a colon.
 	 * 
