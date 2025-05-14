@@ -31,7 +31,7 @@ public class InventorySystem {
 	 */
 	public ItemDTO retrieveItem(String itemId) throws DatabaseFailureException, ItemNotFoundException {
 		if ("fail114514".equals(itemId)) {
-			throw new DatabaseFailureException("Database server is not running.");
+			throw new DatabaseFailureException("Database server is not running");
 		}
 
 		InventoryItem item = inventory.get(itemId);

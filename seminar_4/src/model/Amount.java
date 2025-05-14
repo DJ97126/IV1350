@@ -72,6 +72,7 @@ public class Amount {
 	 *
 	 * @param divisor The Amount to divide by.
 	 * @return The result of the division.
+	 * @throws ArithmeticException if the divisor is zero.
 	 */
 	public Amount divide(Amount other) {
 		if (other.amount.compareTo(BigDecimal.ZERO) == 0) {

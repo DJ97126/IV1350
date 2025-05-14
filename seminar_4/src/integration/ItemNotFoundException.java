@@ -10,6 +10,6 @@ public class ItemNotFoundException extends Exception {
 	 * @param itemId The identifier that was not found.
 	 */
 	public ItemNotFoundException(String itemId) {
-		super("No item with identifier '%s' was found in inventory.".formatted(itemId));
+		super("No item with identifier '%s' was found in inventory".formatted(itemId));
 	}
 }

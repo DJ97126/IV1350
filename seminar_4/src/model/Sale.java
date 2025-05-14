@@ -91,7 +91,7 @@ public class Sale {
 	 */
 	public SaleDTO getSaleInfo(Amount amount) {
 		if (amount.compareTo(totalPrice) < 0) {
-			throw new IllegalArgumentException("Paid amount is less than total price.");
+			throw new IllegalArgumentException("Paid amount is less than total price");
 		}
 		Amount change = getChange(amount);
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
@@ -99,13 +99,13 @@ public class Sale {
 
 	private Amount getChange(Amount amount) {
 		if (amount == null || amount.isNegative()) {
-			throw new IllegalArgumentException("Payment amount must be non-null and non-negative.");
+			throw new IllegalArgumentException("Payment amount must be non-null and non-negative");
 		}
 
 		Amount change = amount.subtract(totalPrice);
 
 		if (change.isNegative()) {
-			throw new IllegalArgumentException("Change amount cannot be negative.");
+			throw new IllegalArgumentException("Change amount cannot be negative");
 		}
 
 		return change;
@@ -120,7 +120,7 @@ public class Sale {
 	 */
 	public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
 		if (saleDTO == null) {
-			throw new IllegalArgumentException("Sale information cannot be null.");
+			throw new IllegalArgumentException("Sale information cannot be null");
 		}
 		return new ReceiptDTO(saleDTO);
 	}
@@ -135,16 +135,16 @@ public class Sale {
 	 */
 	public Amount setDiscountedPrice(DiscountDTO discountInfo) {
 		if (discountInfo == null) {
-			throw new IllegalArgumentException("Discount information cannot be null.");
+			throw new IllegalArgumentException("Discount information cannot be null");
 		}
 
 		Amount discountAmount = discountInfo.amount();
 
 		if (discountAmount == null || discountAmount.isNegative()) {
-			throw new IllegalArgumentException("Discount amount must be non-null and non-negative.");
+			throw new IllegalArgumentException("Discount amount must be non-null and non-negative");
 		}
 		if (discountAmount.compareTo(totalPrice) > 0) {
-			throw new IllegalArgumentException("Discount amount cannot be greater than total price.");
+			throw new IllegalArgumentException("Discount amount cannot be greater than total price");
 		}
 
 		totalPrice = totalPrice.subtract(discountAmount);

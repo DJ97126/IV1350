@@ -40,7 +40,7 @@ public class View {
 			Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 			displayChangeInfo(change);
 		} catch (Exception e) {
-			writeToLogAndUI("Sale failed, please try again.", e);
+			writeToLogAndUI("Sale failed, please try again", e);
 		}
 	}
 

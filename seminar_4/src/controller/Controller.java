@@ -55,10 +55,10 @@ public class Controller {
 			return saleInfo;
 		} catch (DatabaseFailureException e) {
 			logger.logException(e);
-			throw new RuntimeException("Could not retrieve item information. Please try again later.");
+			throw new RuntimeException("Could not retrieve item information");
 		} catch (ItemNotFoundException e) {
 			logger.logException(e);
-			throw new RuntimeException("Item not found. Please check the item ID.");
+			throw new RuntimeException("Item not found in inventory");
 		}
 	}
 

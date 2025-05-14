@@ -75,7 +75,7 @@ public class InventorySystemTest {
 		Exception exception = assertThrows(DatabaseFailureException.class, () -> {
 			inventorySystem.retrieveItem("fail114514");
 		});
-		assertTrue(exception.getMessage().contains("Database server is not running."));
+		assertTrue(exception.getMessage().contains("Database server is not running"));
 	}
 
 	@Test
