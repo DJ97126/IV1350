@@ -10,7 +10,6 @@ import java.util.Locale;
  * This class contains utility methods for string formatting.
  */
 public class StringUtils {
-
 	/**
 	 * Formats a BigDecimal to a string with two decimal places, replacing the decimal point with a colon.
 	 * 
