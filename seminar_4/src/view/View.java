@@ -40,8 +40,8 @@ public class View {
 
 			Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 			displayChangeInfo(change);
-		} catch (Exception e) {
-			writeToLogAndUI("Something went wrong during the sale", e);
+		} catch (RuntimeException e) {
+			writeToLogAndUI("Something went wrong during the sale.", e);
 		}
 	}
 

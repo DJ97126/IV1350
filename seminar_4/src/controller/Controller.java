@@ -39,7 +39,7 @@ public class Controller {
 	}
 
 	/**
-	 * Constructor for the add an observer instance.
+	 * Registers an observer instance.
 	 * 
 	 * @param observer the observer instance to be added
 	 */
@@ -52,6 +52,7 @@ public class Controller {
 	 */
 	public void startSale() {
 		sale = new Sale();
+
 		for (TotalRevenueObserver observer : observers) {
 			sale.registerObserver(observer);
 		}
@@ -95,24 +96,15 @@ public class Controller {
 	 * @return The change to be returned to the customer.
 	 */
 	public Amount finalizeSaleWithPayment(Amount amount) {
-		if (amount == null || amount.isNegative()) {
-			throw new IllegalArgumentException("Paid amount must be non-null and non-negative");
-		}
+		sale.setAmountPaid(amount);
 
-		try {
-			sale.setAmountPaid(amount);
+		SaleDTO saleDTO = sale.getSaleInfo(amount);
+		ReceiptDTO receiptDTO = sale.getReceiptInfo(saleDTO);
 
-			SaleDTO saleDTO = sale.getSaleInfo(amount);
-			ReceiptDTO receiptDTO = sale.getReceiptInfo(saleDTO);
+		accountingSystem.account(saleDTO);
+		inventorySystem.updateInventory(saleDTO);
+		printer.printReceipt(receiptDTO);
 
-			accountingSystem.account(saleDTO);
-			inventorySystem.updateInventory(saleDTO);
-			printer.printReceipt(receiptDTO);
-
-			return saleDTO.change().rounded();
-		} catch (Exception e) {
-			logger.logException(e);
-			throw new RuntimeException("An error occurred while finalizing the sale");
-		}
+		return saleDTO.change().rounded();
 	}
 }

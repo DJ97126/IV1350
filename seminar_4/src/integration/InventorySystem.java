@@ -7,8 +7,8 @@ import dto.SaleDTO;
 import model.Amount;
 
 /**
- * This class simulates an inventory system that stores the items available for sale. 
- * It provides methods to retrieve item information and update the inventory based on sales.
+ * This class simulates an inventory system that stores the items available for sale. It provides methods to retrieve
+ * item information and update the inventory based on sales.
  */
 public class InventorySystem {
 	private final HashMap<String, InventoryItem> inventory;
@@ -26,7 +26,8 @@ public class InventorySystem {
 	 * 
 	 * @param itemId The ID of the item to be retrieved.
 	 * @return The object containing information about this item. Null if not found.
-	 * @throws DatabaseFailureException If the database server is not running.
+	 * @throws DatabaseFailureException if the database server is not running.
+	 * @throws ItemNotFoundException    if the item is not found in the inventory.
 	 */
 	public ItemDTO retrieveItem(String itemId) throws DatabaseFailureException, ItemNotFoundException {
 		if ("fail114514".equals(itemId)) {
@@ -38,16 +39,17 @@ public class InventorySystem {
 		if (item == null) {
 			throw new ItemNotFoundException(itemId);
 		}
-		
+
 		return item.item;
 	}
 
 	/**
-	 * Updates the inventory based on the sale information. Reduces the quantity of each item sold. 
-	 * This class is only for simulation purposes and does not represent the actual external inventory. 
-	 * Hence it will not be tested in the test cases.
+	 * Updates the inventory based on the sale information. Reduces the quantity of each item sold. This class is only
+	 * for simulation purposes and does not represent the actual external inventory. Hence it will not be tested in the
+	 * test cases.
 	 * 
 	 * @param saleDTO The sale information.
+	 * @throws IllegalArgumentException if the saleDTO is null.
 	 */
 	public void updateInventory(SaleDTO saleDTO) {
 		for (ItemDTO soldItem : saleDTO.boughtItems()) {
@@ -77,19 +79,17 @@ public class InventorySystem {
 		Amount item2OriginalPrice = calculateOriginalPrice(new Amount("14.9"), vatAmount);
 
 		ItemDTO item1 = new ItemDTO(
-			"abc123",
-			"BigWheel Oatmeal",
-			item1OriginalPrice,
-			vatAmount,
-			"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free"
-		);
+				"abc123",
+				"BigWheel Oatmeal",
+				item1OriginalPrice,
+				vatAmount,
+				"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free");
 		ItemDTO item2 = new ItemDTO(
-			"def456",
-			"YouGoGo Blueberry",
-			item2OriginalPrice,
-			vatAmount,
-			"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour"
-		);
+				"def456",
+				"YouGoGo Blueberry",
+				item2OriginalPrice,
+				vatAmount,
+				"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
 
 		inventory.put(item1.id(), new InventoryItem(item1, 2));
 		inventory.put(item2.id(), new InventoryItem(item2, 2));

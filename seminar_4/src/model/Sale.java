@@ -106,16 +106,8 @@ public class Sale {
 	 *
 	 * @param amount The amount paid by the customer.
 	 * @return Sale information.
-	 * @throws IllegalArgumentException if the amount paid is less than the total price, or is null.
 	 */
 	public SaleDTO getSaleInfo(Amount amount) {
-		if (amount == null) {
-			throw new IllegalArgumentException("Payment amount must be non-null");
-		}
-		if (amount.compareTo(totalPrice) < 0) {
-			throw new IllegalArgumentException("Paid amount is less than total price");
-		}
-		
 		Amount change = getChange(amount);
 		notifyObservers();
 
@@ -132,13 +124,8 @@ public class Sale {
 	 *
 	 * @param saleDTO The finalized sale details.
 	 * @return A new receipt.
-	 * @throws IllegalArgumentException if the saleDTO is null.
 	 */
 	public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
-		if (saleDTO == null) {
-			throw new IllegalArgumentException("Sale information cannot be null");
-		}
-		
 		return new ReceiptDTO(saleDTO);
 	}
 

@@ -16,7 +16,7 @@ public class Printer {
 	/**
 	 * Prints the receipt to the console. Simulates a printer.
 	 * 
-	 * @param receiptDTO
+	 * @param receiptDTO The receipt information to be printed.
 	 */
 	public void printReceipt(ReceiptDTO receiptDTO) {
 		SaleDTO saleInformation = receiptDTO.sale();
