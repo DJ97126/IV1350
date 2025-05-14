@@ -63,7 +63,8 @@ public class Controller {
 	 * @return The total price of the current sale.
 	 */
 	public BigDecimal endSale() {
-		return sale.getTotalPrice().setScale(2, RoundingMode.HALF_UP);
+		BigDecimal formattedTotalPrice = formatAmount(sale.getTotalPrice());
+		return formattedTotalPrice;
 	}
 
 	/**
@@ -82,6 +83,11 @@ public class Controller {
 		inventorySystem.updateInventory(saleDTO);
 		printer.printReceipt(receiptDTO);
 
-		return saleDTO.change().setScale(2, RoundingMode.HALF_UP);
+		BigDecimal formattedChange = formatAmount(saleDTO.change());
+		return formattedChange;
+	}
+
+	private BigDecimal formatAmount(BigDecimal amount) {
+		return amount.setScale(2, RoundingMode.HALF_UP);
 	}
 }
