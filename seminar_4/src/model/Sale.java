@@ -5,7 +5,6 @@ import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +35,8 @@ public class Sale {
 	 *
 	 * @param boughtItem The item to be added to the sale.
 	 * @return The current item information and running total.
-	 * @throws IllegalArgumentException If the provided item is null.
 	 */
 	public SaleInfoDTO addBoughtItem(ItemDTO boughtItem) {
-		if (boughtItem == null) {
-			throw new IllegalArgumentException("Item cannot be null");
-		}
 		boughtItems.add(boughtItem);
 		ItemDTO itemWithVat = calculateRunningTotal(boughtItem);
 		return new SaleInfoDTO(itemWithVat, totalPrice, totalVat);
@@ -51,7 +46,7 @@ public class Sale {
 		Amount itemBasePrice = boughtItem.price();
 		Amount vatRate = boughtItem.vat();
 		Amount vatPrice = itemBasePrice.multiply(vatRate);
-		Amount itemFullPrice = itemBasePrice.multiply(vatRate.add(new Amount(BigDecimal.ONE)));
+		Amount itemFullPrice = itemBasePrice.multiply(vatRate.add(new Amount("1")));
 
 		totalVat = totalVat.add(vatPrice);
 		totalPrice = totalPrice.add(itemFullPrice);
@@ -92,11 +87,11 @@ public class Sale {
 	 *
 	 * @param amount The amount paid by the customer.
 	 * @return Sale information.
-	 * @throws IllegalArgumentException If the amount paid is less than the total price.
+	 * @throws IllegalArgumentException If the amount paid is less than the total price, is null, or is negative.
 	 */
 	public SaleDTO getSaleInfo(Amount amount) {
 		if (amount.compareTo(totalPrice) < 0) {
-			throw new IllegalArgumentException("Paid amount is less than total price");
+			throw new IllegalArgumentException("Paid amount is less than total price.");
 		}
 		Amount change = getChange(amount);
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
@@ -104,12 +99,15 @@ public class Sale {
 
 	private Amount getChange(Amount amount) {
 		if (amount == null || amount.isNegative()) {
-			throw new IllegalArgumentException("Payment amount must be non-null and non-negative");
+			throw new IllegalArgumentException("Payment amount must be non-null and non-negative.");
 		}
+
 		Amount change = amount.subtract(totalPrice);
+
 		if (change.isNegative()) {
-			throw new IllegalArgumentException("Change amount cannot be negative");
+			throw new IllegalArgumentException("Change amount cannot be negative.");
 		}
+
 		return change;
 	}
 
@@ -122,7 +120,7 @@ public class Sale {
 	 */
 	public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
 		if (saleDTO == null) {
-			throw new IllegalArgumentException("Sale information cannot be null");
+			throw new IllegalArgumentException("Sale information cannot be null.");
 		}
 		return new ReceiptDTO(saleDTO);
 	}
@@ -137,14 +135,16 @@ public class Sale {
 	 */
 	public Amount setDiscountedPrice(DiscountDTO discountInfo) {
 		if (discountInfo == null) {
-			throw new IllegalArgumentException("Discount information cannot be null");
+			throw new IllegalArgumentException("Discount information cannot be null.");
 		}
+
 		Amount discountAmount = discountInfo.amount();
+
 		if (discountAmount == null || discountAmount.isNegative()) {
-			throw new IllegalArgumentException("Discount amount must be non-null and non-negative");
+			throw new IllegalArgumentException("Discount amount must be non-null and non-negative.");
 		}
 		if (discountAmount.compareTo(totalPrice) > 0) {
-			throw new IllegalArgumentException("Discount amount cannot be greater than total price");
+			throw new IllegalArgumentException("Discount amount cannot be greater than total price.");
 		}
 
 		totalPrice = totalPrice.subtract(discountAmount);
