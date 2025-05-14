@@ -87,7 +87,7 @@ public class Sale {
 	 *
 	 * @param amount The amount paid by the customer.
 	 * @return Sale information.
-	 * @throws IllegalArgumentException If the amount paid is less than the total price, is null, or is negative.
+	 * @throws IllegalArgumentException if the amount paid is less than the total price, is null, or is negative.
 	 */
 	public SaleDTO getSaleInfo(Amount amount) {
 		if (amount.compareTo(totalPrice) < 0) {
@@ -116,7 +116,7 @@ public class Sale {
 	 *
 	 * @param saleDTO The finalized sale details.
 	 * @return A new receipt.
-	 * @throws IllegalArgumentException If the saleDTO is null.
+	 * @throws IllegalArgumentException if the saleDTO is null.
 	 */
 	public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
 		if (saleDTO == null) {
@@ -130,7 +130,7 @@ public class Sale {
 	 *
 	 * @param discountInfo The discount information to be applied.
 	 * @return The discounted price
-	 * @throws IllegalArgumentException If discountInfo is null or if discount amount is negative or if discount amount
+	 * @throws IllegalArgumentException if discountInfo is null or if discount amount is negative or if discount amount
 	 *                                  is greater then total price.
 	 */
 	public Amount setDiscountedPrice(DiscountDTO discountInfo) {
