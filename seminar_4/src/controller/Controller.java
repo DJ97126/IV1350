@@ -95,11 +95,11 @@ public class Controller {
 	 * @return The change to be returned to the customer.
 	 */
 	public Amount finalizeSaleWithPayment(Amount amount) {
-		try {
-			if (amount == null || amount.isNegative()) {
-				throw new IllegalArgumentException("Paid amount must be non-null and non-negative");
-			}
+		if (amount == null || amount.isNegative()) {
+			throw new IllegalArgumentException("Paid amount must be non-null and non-negative");
+		}
 
+		try {
 			sale.setAmountPaid(amount);
 
 			SaleDTO saleDTO = sale.getSaleInfo(amount);
@@ -110,9 +110,6 @@ public class Controller {
 			printer.printReceipt(receiptDTO);
 
 			return saleDTO.change().rounded();
-		} catch (IllegalArgumentException e) {
-			logger.logException(e);
-			throw new RuntimeException("Invalid payment: %s".formatted(e.getMessage()));
 		} catch (Exception e) {
 			logger.logException(e);
 			throw new RuntimeException("An error occurred while finalizing the sale");
