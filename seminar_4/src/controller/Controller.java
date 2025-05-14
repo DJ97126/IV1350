@@ -20,6 +20,7 @@ public class Controller {
 	private final AccountingSystem accountingSystem;
 	private final InventorySystem inventorySystem;
 	private final Printer printer;
+
 	private LogHandler logger = LogHandler.getLogger();
 
 	private Sale sale;
@@ -45,20 +46,20 @@ public class Controller {
 	 * 
 	 * @param itemId The ID of the item to be entered into the sale.
 	 * @return The current item information and running total.
-	 * @throws DatabaseFailureException if the item cannot be retrieved due to inventory system failure.
 	 * @throws ItemNotFoundException    if the item is not found in the inventory.
+	 * @throws DatabaseFailureException if the item cannot be retrieved due to inventory system failure.
 	 */
 	public SaleInfoDTO enterItem(String itemId) {
 		try {
 			ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
 			SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
 			return saleInfo;
-		} catch (DatabaseFailureException e) {
-			logger.logException(e);
-			throw new RuntimeException("Could not retrieve item information");
 		} catch (ItemNotFoundException e) {
 			logger.logException(e);
 			throw new RuntimeException("Item not found in inventory");
+		} catch (DatabaseFailureException e) {
+			logger.logException(e);
+			throw new RuntimeException("Could not retrieve item information");
 		}
 	}
 
@@ -78,15 +79,27 @@ public class Controller {
 	 * @return The change to be returned to the customer.
 	 */
 	public Amount finalizeSaleWithPayment(Amount amount) {
-		sale.setAmountPaid(amount);
+		try {
+			if (amount == null || amount.isNegative()) {
+				throw new IllegalArgumentException("Paid amount must be non-null and non-negative");
+			}
 
-		SaleDTO saleDTO = sale.getSaleInfo(amount);
-		ReceiptDTO receiptDTO = sale.getReceiptInfo(saleDTO);
+			sale.setAmountPaid(amount);
 
-		accountingSystem.account(saleDTO);
-		inventorySystem.updateInventory(saleDTO);
-		printer.printReceipt(receiptDTO);
+			SaleDTO saleDTO = sale.getSaleInfo(amount);
+			ReceiptDTO receiptDTO = sale.getReceiptInfo(saleDTO);
 
-		return saleDTO.change().rounded();
+			accountingSystem.account(saleDTO);
+			inventorySystem.updateInventory(saleDTO);
+			printer.printReceipt(receiptDTO);
+
+			return saleDTO.change().rounded();
+		} catch (IllegalArgumentException e) {
+			logger.logException(e);
+			throw new RuntimeException("Invalid payment: %s".formatted(e.getMessage()));
+		} catch (Exception e) {
+			logger.logException(e);
+			throw new RuntimeException("An error occurred while finalizing the sale");
+		}
 	}
 }
