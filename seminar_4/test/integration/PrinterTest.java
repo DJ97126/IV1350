@@ -2,18 +2,17 @@ package integration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
-
-import static org.junit.jupiter.api.Assertions.*;
+import model.Amount;
 
 public class PrinterTest {
 	private Printer printer;
@@ -44,18 +43,18 @@ public class PrinterTest {
 		List<ItemDTO> boughtItems = new ArrayList<>();
 		for (int i = 0; i < 11; i++) {
 			boughtItems.add(new ItemDTO("test1", "test1",
-					new BigDecimal("12"), new BigDecimal("0.456"),
+					new Amount("12"), new Amount("0.456"),
 					"testDesc"));
 		}
 		boughtItems.add(new ItemDTO("test2", "test kinda long name item",
-				new BigDecimal("4567"), new BigDecimal("0.123"),
+				new Amount("4567"), new Amount("0.123"),
 				"testDesc2"));
 
 		LocalDateTime saleDateTime = LocalDateTime.parse("2024-02-12T16:05");
-		BigDecimal totalPrice = new BigDecimal("74.7");
-		BigDecimal totalVat = new BigDecimal("4.23");
-		BigDecimal amountPaid = new BigDecimal("100.0");
-		BigDecimal change = new BigDecimal("25.3");
+		Amount totalPrice = new Amount("74.7");
+		Amount totalVat = new Amount("4.23");
+		Amount amountPaid = new Amount("100.0");
+		Amount change = new Amount("25.3");
 		SaleDTO saleInfo = new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
 		ReceiptDTO receipt = new ReceiptDTO(saleInfo);
 

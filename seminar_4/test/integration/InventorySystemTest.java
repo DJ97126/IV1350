@@ -2,14 +2,12 @@ package integration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import dto.ItemDTO;
-
-import static org.junit.jupiter.api.Assertions.*;
+import model.Amount;
 
 public class InventorySystemTest {
 	private InventorySystem inventorySystem;
@@ -37,15 +35,24 @@ public class InventorySystemTest {
 
 	@Test
 	public void testInventorySystemRetrieveItem() {
-		BigDecimal item1OriginalPrice = calculateOriginalPrice(new BigDecimal("29.9"), new BigDecimal("0.06"));
-		BigDecimal item2OriginalPrice = calculateOriginalPrice(new BigDecimal("14.9"), new BigDecimal("0.06"));
+		Amount vatAmount = new Amount("0.06");
+		Amount item1OriginalPrice = calculateOriginalPrice(new Amount("29.9"), vatAmount);
+		Amount item2OriginalPrice = calculateOriginalPrice(new Amount("14.9"), vatAmount);
 
-		ItemDTO expectedItem1 = new ItemDTO("abc123", "BigWheel Oatmeal", item1OriginalPrice,
-				BigDecimal.valueOf(0.06d),
-				"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free");
-		ItemDTO expectedItem2 = new ItemDTO("def456", "YouGoGo Blueberry", item2OriginalPrice,
-				BigDecimal.valueOf(0.06d),
-				"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
+		ItemDTO expectedItem1 = new ItemDTO(
+			"abc123",
+			"BigWheel Oatmeal",
+			item1OriginalPrice,
+			vatAmount,
+			"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free"
+		);
+		ItemDTO expectedItem2 = new ItemDTO(
+			"def456",
+			"YouGoGo Blueberry",
+			item2OriginalPrice,
+			vatAmount,
+			"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour"
+		);
 
 		String itemId1 = "abc123";
 		String itemId2 = "def456";
@@ -60,8 +67,9 @@ public class InventorySystemTest {
 		assertEquals(expectedItem2, item2, "Item 2 does not match the expected value.");
 	}
 
-	private BigDecimal calculateOriginalPrice(BigDecimal fullPrice, BigDecimal vatRate) {
-		return fullPrice.divide(vatRate.add(BigDecimal.ONE), MathContext.DECIMAL128);
+	private Amount calculateOriginalPrice(Amount fullPrice, Amount vatRate) {
+		Amount divisor = vatRate.add(new Amount("1"));
+		return fullPrice.divide(divisor);
 	}
 
 	@Test

@@ -1,12 +1,12 @@
 package integration;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
 import dto.ItemDTO;
 import dto.SaleDTO;
+import model.Amount;
 
 /**
  * This class simulates an inventory system that stores the items available for sale. 
@@ -68,20 +68,31 @@ public class InventorySystem {
 	}
 
 	private void simulateInventory() {
-		// Reason to calculate original price is because the sample in the task seem not to have given this.
-		BigDecimal item1OriginalPrice = calculateOriginalPrice(new BigDecimal("29.9"), new BigDecimal("0.06"));
-		BigDecimal item2OriginalPrice = calculateOriginalPrice(new BigDecimal("14.9"), new BigDecimal("0.06"));
+		Amount vatAmount = new Amount("0.06");
+		Amount item1OriginalPrice = calculateOriginalPrice(new Amount("29.9"), vatAmount);
+		Amount item2OriginalPrice = calculateOriginalPrice(new Amount("14.9"), vatAmount);
 
-		ItemDTO item1 = new ItemDTO("abc123", "BigWheel Oatmeal", item1OriginalPrice, BigDecimal.valueOf(0.06d),
-				"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free");
-		ItemDTO item2 = new ItemDTO("def456", "YouGoGo Blueberry", item2OriginalPrice, BigDecimal.valueOf(0.06d),
-				"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour");
+		ItemDTO item1 = new ItemDTO(
+			"abc123",
+			"BigWheel Oatmeal",
+			item1OriginalPrice,
+			vatAmount,
+			"BigWheel Oatmeal 500g, whole grain oats, high fiber, gluten free"
+		);
+		ItemDTO item2 = new ItemDTO(
+			"def456",
+			"YouGoGo Blueberry",
+			item2OriginalPrice,
+			vatAmount,
+			"YouGoGo Blueberry 240g, low sugar youghurt, blueberry flavour"
+		);
 
 		inventory.put(item1.id(), new InventoryItem(item1, 2));
 		inventory.put(item2.id(), new InventoryItem(item2, 2));
 	}
 
-	private BigDecimal calculateOriginalPrice(BigDecimal fullPrice, BigDecimal vatRate) {
-		return fullPrice.divide(vatRate.add(BigDecimal.ONE), MathContext.DECIMAL128);
+	private Amount calculateOriginalPrice(Amount fullPrice, Amount vatRate) {
+		Amount divisor = vatRate.add(new Amount("1"));
+		return fullPrice.divide(divisor);
 	}
 }

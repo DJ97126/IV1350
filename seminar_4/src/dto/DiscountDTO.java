@@ -1,5 +1,5 @@
 package dto;
 
-import java.math.BigDecimal;
+import model.Amount;
 
-public record DiscountDTO(int type, BigDecimal amount) {}
+public record DiscountDTO(int type, Amount amount) {}

@@ -1,6 +1,5 @@
 package integration;
 
-import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +7,7 @@ import java.util.Map;
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
-
-import static utils.StringUtils.formatBigDecimalToColon;
+import model.Amount;
 
 /**
  * This class simulates a printer that prints the receipt to the console. 
@@ -47,15 +45,15 @@ public class Printer {
 			ItemDTO item = entry.getKey();
 			int quantity = entry.getValue();
 
-			BigDecimal priceWithVat = item.price().multiply(item.vat().add(BigDecimal.ONE));
-			BigDecimal totalItemPrice = priceWithVat.multiply(new BigDecimal(quantity));
+			Amount priceWithVat = item.price().multiply(item.vat().add(new Amount("1")));
+			Amount totalItemPrice = priceWithVat.multiply(new Amount(Integer.toString(quantity)));
 
 			String itemName = (item.name().length() > 21)
 					? item.name().substring(0, 19) + "..."
 					: item.name();
 			String itemQuantity = String.valueOf(quantity);
-			String itemPrice = formatBigDecimalToColon(priceWithVat);
-			String itemTotal = formatBigDecimalToColon(totalItemPrice);
+			String itemPrice = priceWithVat.colonized();
+			String itemTotal = totalItemPrice.colonized();
 
 			String formattedString = """
 					%-24s %2s x %7s %10s SEK
@@ -69,10 +67,10 @@ public class Printer {
 
 	private String getFormattedReceipt(SaleDTO saleInfo, String itemsString) {
 		String time = saleInfo.saleDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-		String total = formatBigDecimalToColon(saleInfo.totalPrice());
-		String vat = formatBigDecimalToColon(saleInfo.totalVat());
-		String paid = formatBigDecimalToColon(saleInfo.amountPaid());
-		String change = formatBigDecimalToColon(saleInfo.change());
+		String total = saleInfo.totalPrice().colonized();
+		String vat = saleInfo.totalVat().colonized();
+		String paid = saleInfo.amountPaid().colonized();
+		String change = saleInfo.change().colonized();
 
 		return """
 				------------------ Begin receipt -------------------

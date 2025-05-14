@@ -1,8 +1,5 @@
 package controller;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
@@ -11,6 +8,7 @@ import integration.AccountingSystem;
 import integration.InventorySystem;
 import integration.InventorySystemException;
 import integration.Printer;
+import model.Amount;
 import model.Sale;
 
 /**
@@ -62,9 +60,8 @@ public class Controller {
 	 * 
 	 * @return The total price of the current sale.
 	 */
-	public BigDecimal endSale() {
-		BigDecimal formattedTotalPrice = formatAmount(sale.getTotalPrice());
-		return formattedTotalPrice;
+	public Amount endSale() {
+		return sale.getTotalPrice().rounded();
 	}
 
 	/**
@@ -73,7 +70,7 @@ public class Controller {
 	 * @param amount The paid amount.
 	 * @return The change to be returned to the customer.
 	 */
-	public BigDecimal finalizeSaleWithPayment(BigDecimal amount) {
+	public Amount finalizeSaleWithPayment(Amount amount) {
 		sale.setAmountPaid(amount);
 
 		SaleDTO saleDTO = sale.getSaleInfo(amount);
@@ -83,11 +80,6 @@ public class Controller {
 		inventorySystem.updateInventory(saleDTO);
 		printer.printReceipt(receiptDTO);
 
-		BigDecimal formattedChange = formatAmount(saleDTO.change());
-		return formattedChange;
-	}
-
-	private BigDecimal formatAmount(BigDecimal amount) {
-		return amount.setScale(2, RoundingMode.HALF_UP);
+		return saleDTO.change().rounded();
 	}
 }

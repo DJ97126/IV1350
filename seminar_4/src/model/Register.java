@@ -1,18 +1,16 @@
 package model;
 
-import java.math.BigDecimal;
-
 /**
  * This serves as the register class that stores the amount of money in the register.
  */
 public class Register {
-	private BigDecimal amount;
+	private Amount amount;
 
 	/**
 	 * Constructor for the Register class.
 	 */
 	public Register() {
-		this.amount = BigDecimal.valueOf(0);
+		this.amount = new Amount();
 	}
 
 	/**
@@ -20,7 +18,7 @@ public class Register {
 	 * 
 	 * @param amount The amount in the register.
 	 */
-	public void updateAmount(BigDecimal amount) {
+	public void updateAmount(Amount amount) {
 		this.amount = this.amount.add(amount);
 	}
 }

@@ -16,8 +16,8 @@ import java.util.List;
 public class Sale {
 	private final LocalDateTime saleDateTime;
 	private final List<ItemDTO> boughtItems;
-	private BigDecimal totalPrice;
-	private BigDecimal totalVat;
+	private Amount totalPrice;
+	private Amount totalVat;
 
 	private Payment payment;
 
@@ -27,8 +27,8 @@ public class Sale {
 	public Sale() {
 		saleDateTime = LocalDateTime.now();
 		boughtItems = new ArrayList<>();
-		totalPrice = BigDecimal.valueOf(0);
-		totalVat = BigDecimal.valueOf(0);
+		totalPrice = new Amount();
+		totalVat = new Amount();
 	}
 
 	/**
@@ -48,10 +48,10 @@ public class Sale {
 	}
 
 	private ItemDTO calculateRunningTotal(ItemDTO boughtItem) {
-		BigDecimal itemBasePrice = boughtItem.price();
-		BigDecimal vatRate = boughtItem.vat();
-		BigDecimal vatPrice = itemBasePrice.multiply(vatRate);
-		BigDecimal itemFullPrice = itemBasePrice.multiply(vatRate.add(BigDecimal.ONE));
+		Amount itemBasePrice = boughtItem.price();
+		Amount vatRate = boughtItem.vat();
+		Amount vatPrice = itemBasePrice.multiply(vatRate);
+		Amount itemFullPrice = itemBasePrice.multiply(vatRate.add(new Amount(BigDecimal.ONE)));
 
 		totalVat = totalVat.add(vatPrice);
 		totalPrice = totalPrice.add(itemFullPrice);
@@ -64,7 +64,7 @@ public class Sale {
 	 *
 	 * @return The total price.
 	 */
-	public BigDecimal getTotalPrice() {
+	public Amount getTotalPrice() {
 		this.payment = new Payment();
 		return this.totalPrice;
 	}
@@ -83,7 +83,7 @@ public class Sale {
 	 *
 	 * @param amount The paid amount.
 	 */
-	public void setAmountPaid(BigDecimal amount) {
+	public void setAmountPaid(Amount amount) {
 		payment.setAmount(amount);
 	}
 
@@ -94,20 +94,20 @@ public class Sale {
 	 * @return Sale information.
 	 * @throws IllegalArgumentException If the amount paid is less than the total price.
 	 */
-	public SaleDTO getSaleInfo(BigDecimal amount) {
+	public SaleDTO getSaleInfo(Amount amount) {
 		if (amount.compareTo(totalPrice) < 0) {
 			throw new IllegalArgumentException("Paid amount is less than total price");
 		}
-		BigDecimal change = getChange(amount);
+		Amount change = getChange(amount);
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
 	}
 
-	private BigDecimal getChange(BigDecimal amount) {
-		if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+	private Amount getChange(Amount amount) {
+		if (amount == null || amount.isNegative()) {
 			throw new IllegalArgumentException("Payment amount must be non-null and non-negative");
 		}
-		BigDecimal change = amount.subtract(totalPrice);
-		if (change.compareTo(BigDecimal.ZERO) < 0) {
+		Amount change = amount.subtract(totalPrice);
+		if (change.isNegative()) {
 			throw new IllegalArgumentException("Change amount cannot be negative");
 		}
 		return change;
@@ -135,12 +135,12 @@ public class Sale {
 	 * @throws IllegalArgumentException If discountInfo is null or if discount amount is negative or if discount amount
 	 *                                  is greater then total price.
 	 */
-	public BigDecimal setDiscountedPrice(DiscountDTO discountInfo) {
+	public Amount setDiscountedPrice(DiscountDTO discountInfo) {
 		if (discountInfo == null) {
 			throw new IllegalArgumentException("Discount information cannot be null");
 		}
-		BigDecimal discountAmount = discountInfo.amount();
-		if (discountAmount == null || discountAmount.compareTo(BigDecimal.ZERO) < 0) {
+		Amount discountAmount = discountInfo.amount();
+		if (discountAmount == null || discountAmount.isNegative()) {
 			throw new IllegalArgumentException("Discount amount must be non-null and non-negative");
 		}
 		if (discountAmount.compareTo(totalPrice) > 0) {

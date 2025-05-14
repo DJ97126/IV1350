@@ -3,8 +3,7 @@ package view;
 import controller.Controller;
 import dto.ItemDTO;
 import dto.SaleInfoDTO;
-import java.math.BigDecimal;
-import static utils.StringUtils.formatBigDecimalToColon;
+import model.Amount;
 
 /**
  * This class serves as the simulation of user interface for the system.
@@ -31,10 +30,10 @@ public class View {
 		displayRunningInfo(controller.enterItem("abc123"));
 		displayRunningInfo(controller.enterItem("def456"));
 
-		BigDecimal totalPrice = controller.endSale();
+		Amount totalPrice = controller.endSale();
 		displayEndSaleInfo(totalPrice);
 
-		BigDecimal change = controller.finalizeSaleWithPayment(new BigDecimal(100));
+		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
 	}
 
@@ -43,11 +42,11 @@ public class View {
 
 		String id = currentItem.id();
 		String name = currentItem.name();
-		String price = formatBigDecimalToColon(currentItem.price());
-		String vat = formatBigDecimalToColon(currentItem.vat().multiply(BigDecimal.valueOf(100)));
+		String price = currentItem.price().colonized();
+		String vat = currentItem.vat().multiply(new Amount("100")).colonized();
 		String description = currentItem.description();
-		String totalPrice = formatBigDecimalToColon(saleInfo.totalPrice());
-		String totalVat = formatBigDecimalToColon(saleInfo.totalVat());
+		String totalPrice = saleInfo.totalPrice().colonized();
+		String totalVat = saleInfo.totalVat().colonized();
 
 		System.out.println("""
 				Add 1 item with item id %s:
@@ -62,16 +61,16 @@ public class View {
 				""".formatted(id, id, name, price, vat, description, totalPrice, totalVat));
 	}
 
-	private void displayEndSaleInfo(BigDecimal totalPrice) {
+	private void displayEndSaleInfo(Amount totalPrice) {
 		System.out.println("""
 				End sale:
 				Total cost (incl VAT): %s SEK
-				""".formatted(formatBigDecimalToColon(totalPrice)));
+				""".formatted(totalPrice.colonized()));
 	}
 
-	private void displayChangeInfo(BigDecimal change) {
+	private void displayChangeInfo(Amount change) {
 		System.out.println("""
 				Change to give the customer : %s SEK
-								""".formatted(formatBigDecimalToColon(change)));
+								""".formatted(change.colonized()));
 	}
 }

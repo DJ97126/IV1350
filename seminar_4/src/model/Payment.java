@@ -1,20 +1,18 @@
 package model;
 
-import java.math.BigDecimal;
-
 /**
  * This serves as the payment class that stores the amount of money paid by the customer.
  */
 public class Payment {
 	private Register register;
-	private BigDecimal amount;
+	private Amount amount;
 
 	/**
 	 * Constructor for the Payment class. Initializes the amount to 0.
 	 */
 	public Payment() {
 		this.register = new Register();
-		this.amount = BigDecimal.valueOf(0);
+		this.amount = new Amount();
 	}
 
 	/**
@@ -22,7 +20,7 @@ public class Payment {
 	 * 
 	 * @param amount The amount paid by the customer.
 	 */
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Amount amount) {
 		this.amount = amount;
 		register.updateAmount(this.amount);
 	}
