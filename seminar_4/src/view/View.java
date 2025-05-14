@@ -11,6 +11,7 @@ import util.LogHandler;
  */
 public class View {
 	private Controller controller;
+
 	private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
 	private LogHandler logger = LogHandler.getLogger();
 
@@ -40,7 +41,7 @@ public class View {
 			Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 			displayChangeInfo(change);
 		} catch (Exception e) {
-			writeToLogAndUI("Sale failed, please try again", e);
+			writeToLogAndUI("Something went wrong during the sale", e);
 		}
 	}
 

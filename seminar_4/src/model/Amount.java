@@ -77,6 +77,7 @@ public class Amount {
 		if (other.amount.compareTo(BigDecimal.ZERO) == 0) {
 			throw new ArithmeticException("Division by zero");
 		}
+		
 		return new Amount(this.amount.divide(other.amount, MathContext.DECIMAL128));
 	}
 

@@ -18,7 +18,9 @@ public class Sale {
 	private final List<ItemDTO> boughtItems;
 	private Amount totalPrice;
 	private Amount totalVat;
+
 	private Payment payment;
+
 	private List<TotalRevenueObserver> observers = new ArrayList<>();
 
 	/**
@@ -113,8 +115,10 @@ public class Sale {
 		if (amount.compareTo(totalPrice) < 0) {
 			throw new IllegalArgumentException("Paid amount is less than total price");
 		}
+		
 		Amount change = getChange(amount);
 		notifyObservers();
+
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
 	}
 
@@ -134,6 +138,7 @@ public class Sale {
 		if (saleDTO == null) {
 			throw new IllegalArgumentException("Sale information cannot be null");
 		}
+		
 		return new ReceiptDTO(saleDTO);
 	}
 

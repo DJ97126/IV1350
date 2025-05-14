@@ -20,8 +20,10 @@ public class Printer {
 	 */
 	public void printReceipt(ReceiptDTO receiptDTO) {
 		SaleDTO saleInformation = receiptDTO.sale();
+
 		HashMap<ItemDTO, Integer> quantizedItems = getQuantizedItems(saleInformation);
 		String itemsString = getItemsString(quantizedItems);
+		
 		String formattedReceipt = getFormattedReceipt(saleInformation, itemsString);
 		System.out.println(formattedReceipt);
 	}

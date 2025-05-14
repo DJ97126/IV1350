@@ -18,6 +18,7 @@ public class Main {
 		Controller controller = new Controller();
 		controller.registerObserver(new TotalRevenueView());
 		controller.registerObserver(new TotalRevenueFileOutput());
+		
 		View view = new View(controller);
 		view.simulateExecution();
 	}
