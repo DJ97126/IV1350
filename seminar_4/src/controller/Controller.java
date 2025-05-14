@@ -5,13 +5,16 @@ import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import integration.AccountingSystem;
+import integration.DatabaseFailureException;
 import integration.InventorySystem;
 import integration.ItemNotFoundException;
-import integration.DatabaseFailureException;
 import integration.Printer;
+import java.util.ArrayList;
+import java.util.List;
 import model.Amount;
 import model.Sale;
 import util.LogHandler;
+import util.TotalRevenueObserver;
 
 /**
  * This serves as the main controller that the cashier interacts with the model and integration systems.
@@ -21,6 +24,7 @@ public class Controller {
 	private final InventorySystem inventorySystem;
 	private final Printer printer;
 	private LogHandler logger = LogHandler.getLogger();
+	private List<TotalRevenueObserver> observers = new ArrayList<>();
 
 	private Sale sale;
 
@@ -34,10 +38,22 @@ public class Controller {
 	}
 
 	/**
+	 * Constructor for the add an observer instance.
+	 * 
+	 * @param observer the observer instance to be added
+	 */
+	public void registerObserver(TotalRevenueObserver observer) {
+		observers.add(observer);
+	}
+
+	/**
 	 * Starts a new sale.
 	 */
 	public void startSale() {
 		sale = new Sale();
+		for (TotalRevenueObserver observer : observers) {
+			sale.registerObserver(observer);
+		}
 	}
 
 	/**

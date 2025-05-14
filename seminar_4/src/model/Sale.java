@@ -8,6 +8,7 @@ import dto.SaleInfoDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import util.TotalRevenueObserver;
 
 /**
  * Represents a sale transaction, holding information about items purchased and totals.
@@ -17,8 +18,8 @@ public class Sale {
 	private final List<ItemDTO> boughtItems;
 	private Amount totalPrice;
 	private Amount totalVat;
-
 	private Payment payment;
+	private List<TotalRevenueObserver> observers = new ArrayList<>();
 
 	/**
 	 * Creates a new, empty Sale instance. Initializes totals to zero.
@@ -28,7 +29,23 @@ public class Sale {
 		boughtItems = new ArrayList<>();
 		totalPrice = new Amount();
 		totalVat = new Amount();
+		observers = new ArrayList<>();
 	}
+
+	/**
+     * Registers an observer for total revenue updates.
+	 * 
+     * @param observer The observer to register.
+     */
+    public void registerObserver(TotalRevenueObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (TotalRevenueObserver observer : observers) {
+            observer.updateTotalRevenue(totalPrice);
+        }
+    }
 
 	/**
 	 * Adds a bought item to the sale and calculates the running total.
@@ -94,6 +111,7 @@ public class Sale {
 			throw new IllegalArgumentException("Paid amount is less than total price");
 		}
 		Amount change = getChange(amount);
+		notifyObservers();
 		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
 	}
 

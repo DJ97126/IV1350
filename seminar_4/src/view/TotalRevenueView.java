@@ -1,0 +1,14 @@
+package view;
+
+import model.Amount;
+import util.TotalRevenueObserver;
+
+/**
+ * Observer that prints the total revenue to the console.
+ */
+public class TotalRevenueView implements TotalRevenueObserver {
+    @Override
+    public void updateTotalRevenue(Amount totalRevenue) {
+        System.out.println("Total Revenue: " + totalRevenue.colonized() + " SEK");
+    }
+}
