@@ -1,6 +1,8 @@
 package startup;
 
 import controller.Controller;
+import view.TotalRevenueFileOutput;
+import view.TotalRevenueView;
 import view.View;
 
 /**
@@ -14,6 +16,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Controller controller = new Controller();
+		controller.registerObserver(new TotalRevenueView());
+		controller.registerObserver(new TotalRevenueFileOutput());
 		View view = new View(controller);
 		view.simulateExecution();
 	}
