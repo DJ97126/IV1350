@@ -10,6 +10,7 @@ import integration.InventorySystemException;
 import integration.Printer;
 import model.Amount;
 import model.Sale;
+import util.LogHandler;
 
 /**
  * This serves as the main controller that the cashier interacts with the model and integration systems.
@@ -18,6 +19,7 @@ public class Controller {
 	private final AccountingSystem accountingSystem;
 	private final InventorySystem inventorySystem;
 	private final Printer printer;
+	private LogHandler logger = LogHandler.getLogger();
 
 	private Sale sale;
 
@@ -50,7 +52,7 @@ public class Controller {
 			SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
 			return saleInfo;
 		} catch (InventorySystemException e) {
-			System.err.println(e.getMessage());
+			logger.logException(e);
 			throw new RuntimeException("Could not retrieve item information. Please try again later.");
 		}
 	}

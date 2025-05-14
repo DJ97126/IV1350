@@ -4,12 +4,15 @@ import controller.Controller;
 import dto.ItemDTO;
 import dto.SaleInfoDTO;
 import model.Amount;
+import util.LogHandler;
 
 /**
  * This class serves as the simulation of user interface for the system.
  */
 public class View {
 	private Controller controller;
+	private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
+	private LogHandler logger = LogHandler.getLogger();
 
 	/**
 	 * Sets up the view with the given controller.
@@ -24,17 +27,21 @@ public class View {
 	 * Simulates the execution of the system. This method is a placeholder for actual user interaction.
 	 */
 	public void simulateExecution() {
-		controller.startSale();
+		try {
+			controller.startSale();
 
-		displayRunningInfo(controller.enterItem("abc123"));
-		displayRunningInfo(controller.enterItem("abc123"));
-		displayRunningInfo(controller.enterItem("def456"));
+			displayRunningInfo(controller.enterItem("abc123"));
+			displayRunningInfo(controller.enterItem("abc123"));
+			displayRunningInfo(controller.enterItem("def456"));
 
-		Amount totalPrice = controller.endSale();
-		displayEndSaleInfo(totalPrice);
+			Amount totalPrice = controller.endSale();
+			displayEndSaleInfo(totalPrice);
 
-		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
-		displayChangeInfo(change);
+			Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
+			displayChangeInfo(change);
+		} catch (Exception e) {
+			writeToLogAndUI("Sale failed, please try again.", e);
+		}
 	}
 
 	private void displayRunningInfo(SaleInfoDTO saleInfo) {
@@ -72,5 +79,10 @@ public class View {
 		System.out.println("""
 				Change to give the customer : %s SEK
 								""".formatted(change.colonized()));
+	}
+
+	private void writeToLogAndUI(String uiMessage, Exception exception) {
+		errorMsgHandler.showErrorMsg(uiMessage);
+		logger.logException(exception);
 	}
 }

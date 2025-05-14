@@ -3,7 +3,8 @@ package model;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import utils.StringUtils;
+
+import util.StringUtils;
 
 /**
  * Represents an amount based on BigDecimal.
