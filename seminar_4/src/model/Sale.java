@@ -1,6 +1,5 @@
 package model;
 
-import dto.DiscountDTO;
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
@@ -127,31 +126,5 @@ public class Sale {
 	 */
 	public ReceiptDTO getReceiptInfo(SaleDTO saleDTO) {
 		return new ReceiptDTO(saleDTO);
-	}
-
-	/**
-	 * Applies a discount to the sale's total price.
-	 *
-	 * @param discountInfo The discount information to be applied.
-	 * @return The discounted price
-	 * @throws IllegalArgumentException if discountInfo is null or if discount amount is negative or if discount amount
-	 *                                  is greater then total price.
-	 */
-	public Amount setDiscountedPrice(DiscountDTO discountInfo) {
-		if (discountInfo == null) {
-			throw new IllegalArgumentException("Discount information cannot be null");
-		}
-
-		Amount discountAmount = discountInfo.amount();
-
-		if (discountAmount == null || discountAmount.isNegative()) {
-			throw new IllegalArgumentException("Discount amount must be non-null and non-negative");
-		}
-		if (discountAmount.compareTo(totalPrice) > 0) {
-			throw new IllegalArgumentException("Discount amount cannot be greater than total price");
-		}
-
-		totalPrice = totalPrice.subtract(discountAmount);
-		return discountAmount;
 	}
 }
