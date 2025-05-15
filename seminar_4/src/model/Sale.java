@@ -6,7 +6,7 @@ import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import util.TotalRevenueObserver;
+import observer.TotalRevenueObserver;
 
 /**
  * Represents a sale transaction, holding information about items purchased and totals.

@@ -10,17 +10,19 @@ import model.Amount;
  * This class serves as the simulation of user interface for the system.
  */
 public class View {
-	private Controller controller;
+	private final Controller controller;
 
-	private ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
+	private final ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
 
 	/**
 	 * Sets up the view with the given controller.
 	 *
 	 * @param controller The controller to be used for this view.
 	 */
-	public View(Controller controller) {
-		this.controller = controller;
+	public View(Controller ctrl) {
+		this.controller = ctrl;
+		controller.registerObserver(new TotalRevenueView());
+		controller.registerObserver(new TotalRevenueFileOutput());
 	}
 
 	/**
@@ -42,6 +44,19 @@ public class View {
 
 		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
+
+		for (int i = 0; i < 3; i++){
+			controller.startSale();
+
+			tryEnterItem("abc123");
+			tryEnterItem("def456");
+
+			Amount total = controller.endSale();
+			displayEndSaleInfo(total);
+
+			Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
+			displayChangeInfo(changeToCustomer);
+		}
 	}
 
 	private void tryEnterItem(String itemId) {

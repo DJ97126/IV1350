@@ -1,7 +1,7 @@
 package view;
 
 import model.Amount;
-import util.TotalRevenueObserver;
+import observer.TotalRevenueObserver;
 
 /**
  * Observer that prints the total revenue to the console.

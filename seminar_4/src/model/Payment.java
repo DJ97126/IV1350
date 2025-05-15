@@ -4,7 +4,7 @@ package model;
  * This serves as the payment class that stores the amount of money paid by the customer.
  */
 public class Payment {
-	private Register register;
+	private final Register register;
 	private Amount amount;
 
 	/**

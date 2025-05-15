@@ -12,8 +12,8 @@ import integration.Printer;
 import java.util.ArrayList;
 import model.Amount;
 import model.Sale;
+import observer.TotalRevenueObserver;
 import util.LogHandler;
-import util.TotalRevenueObserver;
 
 /**
  * This serves as the main controller that the cashier interacts with the model and integration systems.
@@ -23,8 +23,8 @@ public class Controller {
 	private final InventorySystem inventorySystem;
 	private final Printer printer;
 
-	private LogHandler logger = LogHandler.getLogger();
-	private ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
+	private final LogHandler logger = LogHandler.getLogger();
+	private final ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
 
 	private Sale sale;
 

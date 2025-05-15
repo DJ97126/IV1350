@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import model.Amount;
-import util.TotalRevenueObserver;
+import observer.TotalRevenueObserver;
 
 /**
  * Observer that prints the total revenue to a file.
