@@ -19,8 +19,8 @@ public class View {
 	 *
 	 * @param controller The controller to be used for this view.
 	 */
-	public View(Controller ctrl) {
-		this.controller = ctrl;
+	public View(Controller controller) {
+		this.controller = controller;
 		controller.registerObserver(new TotalRevenueView());
 		controller.registerObserver(new TotalRevenueFileOutput());
 	}
