@@ -63,20 +63,17 @@ public class Controller {
 	 * 
 	 * @param itemId The ID of the item to be entered into the sale.
 	 * @return The current item information and running total.
-	 * @throws ItemNotFoundException    if the item is not found in the inventory.
-	 * @throws DatabaseFailureException if the item cannot be retrieved due to inventory system failure.
+	 * @throws ItemNotFoundException if the item is not found in the inventory.
+	 * @throws RuntimeException      if the item cannot be retrieved due to inventory system failure.
 	 */
-	public SaleInfoDTO enterItem(String itemId) {
+	public SaleInfoDTO enterItem(String itemId) throws ItemNotFoundException {
 		try {
 			ItemDTO boughtItem = inventorySystem.retrieveItem(itemId);
 			SaleInfoDTO saleInfo = sale.addBoughtItem(boughtItem);
 			return saleInfo;
-		} catch (ItemNotFoundException e) {
-			logger.logException(e);
-			throw new RuntimeException("Item not found in inventory");
 		} catch (DatabaseFailureException e) {
 			logger.logException(e);
-			throw new RuntimeException("Could not retrieve item information");
+			throw new RuntimeException("An inventory database error occurred", e);
 		}
 	}
 

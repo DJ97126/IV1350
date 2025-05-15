@@ -3,8 +3,8 @@ package view;
 import controller.Controller;
 import dto.ItemDTO;
 import dto.SaleInfoDTO;
+import integration.ItemNotFoundException;
 import model.Amount;
-import util.LogHandler;
 
 /**
  * This class serves as the simulation of user interface for the system.
@@ -12,8 +12,7 @@ import util.LogHandler;
 public class View {
 	private Controller controller;
 
-	private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
-	private LogHandler logger = LogHandler.getLogger();
+	private ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
 
 	/**
 	 * Sets up the view with the given controller.
@@ -28,20 +27,30 @@ public class View {
 	 * Simulates the execution of the system. This method is a placeholder for actual user interaction.
 	 */
 	public void simulateExecution() {
+		controller.startSale();
+
+		tryEnterItem("abc123");
+		tryEnterItem("abc123");
+		tryEnterItem("def456");
+
+		tryEnterItem("fail114514");
+
+		tryEnterItem("nonExistentItem");
+
+		Amount totalPrice = controller.endSale();
+		displayEndSaleInfo(totalPrice);
+
+		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
+		displayChangeInfo(change);
+	}
+
+	private void tryEnterItem(String itemId) {
 		try {
-			controller.startSale();
-
-			displayRunningInfo(controller.enterItem("abc123"));
-			displayRunningInfo(controller.enterItem("abc123"));
-			displayRunningInfo(controller.enterItem("def456"));
-
-			Amount totalPrice = controller.endSale();
-			displayEndSaleInfo(totalPrice);
-
-			Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
-			displayChangeInfo(change);
+			displayRunningInfo(controller.enterItem(itemId));
+		} catch (ItemNotFoundException e) {
+			displayUiErrorMessage(e.getMessage());
 		} catch (RuntimeException e) {
-			writeToLogAndUI("Something went wrong during the sale.", e);
+			displayUiErrorMessage(e.getMessage());
 		}
 	}
 
@@ -82,8 +91,7 @@ public class View {
 								""".formatted(change.colonized()));
 	}
 
-	private void writeToLogAndUI(String uiMessage, Exception exception) {
-		errorMsgHandler.showErrorMessage(uiMessage);
-		logger.logException(exception);
+	private void displayUiErrorMessage(String uiMessage) {
+		errorMessageHandler.showErrorMessage(uiMessage);
 	}
 }

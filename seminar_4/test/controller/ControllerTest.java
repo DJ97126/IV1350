@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import dto.SaleInfoDTO;
+import integration.ItemNotFoundException;
 import model.Amount;
 
 public class ControllerTest {
@@ -42,9 +43,10 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testEnteringValidItem() {
+	public void testEnteringValidItem() throws ItemNotFoundException {
 		controller.startSale();
 		String itemId = "abc123";
+
 		SaleInfoDTO saleInfo = controller.enterItem(itemId);
 
 		assertNotNull(saleInfo, "SaleInfoDTO should not be null after entering a valid item.");
@@ -52,7 +54,20 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testFinalizeSaleWithPayment() {
+	public void testEnteringInvalidItem() {
+		controller.startSale();
+		String invalidItemId = "nonExistentItem";
+
+		Exception exception = assertThrows(ItemNotFoundException.class, () -> {
+			controller.enterItem(invalidItemId);
+		});
+
+		assertTrue(exception.getMessage().contains(invalidItemId),
+				"Exception message should mention the invalid item ID.");
+	}
+
+	@Test
+	public void testFinalizeSaleWithPayment() throws ItemNotFoundException {
 		controller.startSale();
 
 		controller.enterItem("abc123");
