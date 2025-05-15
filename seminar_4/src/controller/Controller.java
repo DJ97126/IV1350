@@ -10,7 +10,6 @@ import integration.InventorySystem;
 import integration.ItemNotFoundException;
 import integration.Printer;
 import java.util.ArrayList;
-import java.util.List;
 import model.Amount;
 import model.Sale;
 import util.LogHandler;
@@ -25,7 +24,7 @@ public class Controller {
 	private final Printer printer;
 
 	private LogHandler logger = LogHandler.getLogger();
-	private List<TotalRevenueObserver> observers = new ArrayList<>();
+	private ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
 
 	private Sale sale;
 

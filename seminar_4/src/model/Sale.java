@@ -6,7 +6,6 @@ import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import util.TotalRevenueObserver;
 
 /**
@@ -14,13 +13,13 @@ import util.TotalRevenueObserver;
  */
 public class Sale {
 	private final LocalDateTime saleDateTime;
-	private final List<ItemDTO> boughtItems;
+	private final ArrayList<ItemDTO> boughtItems;
 	private Amount totalPrice;
 	private Amount totalVat;
 
 	private Payment payment;
 
-	private List<TotalRevenueObserver> observers = new ArrayList<>();
+	private ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
 
 	/**
 	 * Creates a new, empty Sale instance. Initializes totals to zero.
@@ -87,7 +86,7 @@ public class Sale {
 	 *
 	 * @return The bought items. Returns an empty list if no items have been added.
 	 */
-	public List<ItemDTO> getBoughtItems() {
+	public ArrayList<ItemDTO> getBoughtItems() {
 		return this.boughtItems;
 	}
 

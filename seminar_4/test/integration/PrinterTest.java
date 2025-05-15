@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +39,7 @@ public class PrinterTest {
 
 	@Test
 	public void testPrinterPrint() {
-		List<ItemDTO> boughtItems = new ArrayList<>();
+		ArrayList<ItemDTO> boughtItems = new ArrayList<>();
 		for (int i = 0; i < 11; i++) {
 			boughtItems.add(new ItemDTO("test1", "test1",
 					new Amount("12"), new Amount("0.456"),
