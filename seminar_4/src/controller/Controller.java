@@ -40,7 +40,7 @@ public class Controller {
 	/**
 	 * Registers an observer instance.
 	 * 
-	 * @param observer the observer instance to be added
+	 * @param observer The observer instance to be added
 	 */
 	public void registerObserver(TotalRevenueObserver observer) {
 		observers.add(observer);
