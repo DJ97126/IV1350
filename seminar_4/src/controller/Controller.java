@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+
+import dto.DiscountDTO;
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
@@ -9,8 +12,10 @@ import integration.DatabaseFailureException;
 import integration.InventorySystem;
 import integration.ItemNotFoundException;
 import integration.Printer;
-import java.util.ArrayList;
+
 import model.Amount;
+import model.discount.DiscountFactory;
+import model.discount.DiscountStrategy;
 import model.Sale;
 import observer.TotalRevenueObserver;
 import util.LogHandler;
@@ -83,6 +88,22 @@ public class Controller {
 	 */
 	public Amount endSale() {
 		return sale.getTotalPrice().rounded();
+	}
+
+	/**
+	 * Requests and applies all eligible discounts for the given customer.
+	 *
+	 * @param customerId The customer ID.
+	 * @return The discounted total price.
+	 */
+	public Amount requestDiscount(int customerId) {
+		ArrayList<ItemDTO> boughtItems = sale.getBoughtItems();
+		Amount totalPrice = sale.getTotalPrice();
+
+		DiscountDTO discountDTO = new DiscountDTO(boughtItems, totalPrice, customerId);
+		ArrayList<DiscountStrategy> discounts = DiscountFactory.getEligibleDiscounts(discountDTO);
+
+		return sale.setDiscountedPrice(discounts);
 	}
 
 	/**

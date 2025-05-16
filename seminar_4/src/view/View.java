@@ -42,22 +42,25 @@ public class View {
 		Amount totalPrice = controller.endSale();
 		displayEndSaleInfo(totalPrice);
 
+		Amount discountedPrice = controller.requestDiscount(114514);
+		displayDiscountInfo(discountedPrice);
+
 		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
 
 		/* Simulate multiple sale instances */
-		for (int i = 0; i < 3; i++) {
-			controller.startSale();
+		// for (int i = 0; i < 3; i++) {
+		// controller.startSale();
 
-			tryEnterItem("abc123");
-			tryEnterItem("def456");
+		// tryEnterItem("abc123");
+		// tryEnterItem("def456");
 
-			Amount total = controller.endSale();
-			displayEndSaleInfo(total);
+		// Amount total = controller.endSale();
+		// displayEndSaleInfo(total);
 
-			Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
-			displayChangeInfo(changeToCustomer);
-		}
+		// Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
+		// displayChangeInfo(changeToCustomer);
+		// }
 	}
 
 	private void tryEnterItem(String itemId) {
@@ -103,8 +106,14 @@ public class View {
 
 	private void displayChangeInfo(Amount change) {
 		System.out.println("""
-				Change to give the customer : %s SEK
+				Change to give the customer: %s SEK
 								""".formatted(change.colonized()));
+	}
+
+	private void displayDiscountInfo(Amount discountedPrice) {
+		System.out.println("""
+				Discounted price: %s SEK
+				""".formatted(discountedPrice.colonized()));
 	}
 
 	private void displayUiErrorMessage(String uiMessage) {

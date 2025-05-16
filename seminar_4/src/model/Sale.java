@@ -4,8 +4,11 @@ import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
+import model.discount.DiscountStrategy;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import observer.TotalRevenueObserver;
 
 /**
@@ -79,6 +82,23 @@ public class Sale {
 	public Amount getTotalPrice() {
 		this.payment = new Payment();
 		return this.totalPrice;
+	}
+
+	/**
+	 * Applies the given discounts to the sale and returns the discounted price.
+	 *
+	 * @param discounts The list of discount strategies to apply.
+	 * @return The discounted total price.
+	 */
+	public Amount setDiscountedPrice(ArrayList<DiscountStrategy> discounts) {
+		Amount discountTotal = new Amount();
+
+		for (DiscountStrategy discount : discounts) {
+			discountTotal = discountTotal.add(discount.calculateDiscount(totalPrice));
+		}
+
+		totalPrice = totalPrice.subtract(discountTotal);
+		return totalPrice;
 	}
 
 	/**
