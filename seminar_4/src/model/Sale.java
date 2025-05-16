@@ -1,13 +1,13 @@
 package model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import model.discount.DiscountStrategy;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import observer.TotalRevenueObserver;
 
