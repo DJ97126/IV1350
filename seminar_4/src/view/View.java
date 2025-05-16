@@ -45,7 +45,8 @@ public class View {
 		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
 
-		for (int i = 0; i < 3; i++){
+		/* Simulate multiple sale instances */
+		for (int i = 0; i < 3; i++) {
 			controller.startSale();
 
 			tryEnterItem("abc123");
@@ -63,9 +64,9 @@ public class View {
 		try {
 			displayRunningInfo(controller.enterItem(itemId));
 		} catch (ItemNotFoundException e) {
-			displayUiErrorMessage(e.getMessage());
+			displayUiErrorMessage("Item with ID %s not found".formatted(itemId));
 		} catch (RuntimeException e) {
-			displayUiErrorMessage(e.getMessage());
+			displayUiErrorMessage("A system error occurred. Please try again or contact support.");
 		}
 	}
 

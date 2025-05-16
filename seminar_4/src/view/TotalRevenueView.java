@@ -9,6 +9,8 @@ import observer.TotalRevenueObserver;
 public class TotalRevenueView implements TotalRevenueObserver {
 	@Override
 	public void updateTotalRevenue(Amount totalRevenue) {
-		System.out.println("Total Revenue: %s SEK".formatted(totalRevenue.colonized()));
+		System.out.println("""
+				Total Revenue: %s SEK
+				""".formatted(totalRevenue.colonized()));
 	}
 }
