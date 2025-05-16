@@ -8,7 +8,6 @@ import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import model.discount.DiscountStrategy;
-
 import observer.TotalRevenueObserver;
 
 /**

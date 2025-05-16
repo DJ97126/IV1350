@@ -39,5 +39,4 @@ public class CustomerBasedDiscount implements DiscountStrategy {
 	public String getDescription() {
 		return description;
 	}
-
 }

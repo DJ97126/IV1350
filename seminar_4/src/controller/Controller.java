@@ -12,7 +12,6 @@ import integration.DatabaseFailureException;
 import integration.InventorySystem;
 import integration.ItemNotFoundException;
 import integration.Printer;
-
 import model.Amount;
 import model.discount.DiscountFactory;
 import model.discount.DiscountStrategy;

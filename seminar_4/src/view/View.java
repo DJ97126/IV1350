@@ -49,27 +49,31 @@ public class View {
 		displayChangeInfo(change);
 
 		/* Simulate multiple sale instances */
-		// for (int i = 0; i < 3; i++) {
-		// controller.startSale();
+		for (int i = 0; i < 3; i++) {
+			controller.startSale();
 
-		// tryEnterItem("abc123");
-		// tryEnterItem("def456");
+			tryEnterItem("abc123");
+			tryEnterItem("def456");
 
-		// Amount total = controller.endSale();
-		// displayEndSaleInfo(total);
+			Amount total = controller.endSale();
+			displayEndSaleInfo(total);
 
-		// Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
-		// displayChangeInfo(changeToCustomer);
-		// }
+			Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
+			displayChangeInfo(changeToCustomer);
+		}
 	}
 
 	private void tryEnterItem(String itemId) {
 		try {
 			displayRunningInfo(controller.enterItem(itemId));
 		} catch (ItemNotFoundException e) {
-			displayUiErrorMessage("Item with ID %s not found".formatted(itemId));
+			displayUiErrorMessage("""
+					Item with ID %s not found
+					""".formatted(itemId));
 		} catch (RuntimeException e) {
-			displayUiErrorMessage("A system error occurred. Please try again or contact support.");
+			displayUiErrorMessage("""
+					A system error occurred. Please try again or contact support.
+					""");
 		}
 	}
 
