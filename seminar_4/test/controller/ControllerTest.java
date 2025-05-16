@@ -43,7 +43,7 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testEnteringValidItem() throws ItemNotFoundException {
+	public void testEnterValidItem() throws ItemNotFoundException {
 		controller.startSale();
 		String itemId = "abc123";
 
@@ -54,7 +54,7 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testEnteringInvalidItem() {
+	public void testEnterInvalidItem() {
 		controller.startSale();
 		String invalidItemId = "nonExistentItem";
 
@@ -64,6 +64,22 @@ public class ControllerTest {
 
 		assertTrue(exception.getMessage().contains(invalidItemId),
 				"Exception message should mention the invalid item ID.");
+	}
+
+	@Test
+	public void testDatabaseFailureException() {
+		controller.startSale();
+		String failItemId = "fail114514";
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+			controller.enterItem(failItemId);
+		});
+
+		assertTrue(exception.getMessage().contains("inventory database error"),
+				"Exception message should mention inventory database error.");
+		assertNotNull(exception.getCause(), "The cause should not be null.");
+		assertEquals("Database server is not running", exception.getCause().getMessage(),
+				"The cause message should match the DatabaseFailureException message.");
 	}
 
 	@Test
