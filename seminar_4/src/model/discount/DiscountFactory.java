@@ -3,8 +3,8 @@ package model.discount;
 import java.util.ArrayList;
 
 import dto.DiscountDTO;
+import dto.DiscountInfoDTO;
 import integration.DiscountCatalog;
-import integration.DiscountCatalog.Discount;
 
 /**
  * Factory for creating eligible discount strategies based on sale and customer data.
@@ -28,17 +28,17 @@ public class DiscountFactory {
 	 * @return A list of applicable discount strategies.
 	 */
 	public ArrayList<DiscountStrategy> fetchEligibleDiscounts(DiscountDTO discountDTO) {
-		ArrayList<Discount> eligibleDiscounts = discountCatalog.fetchEligibleDiscounts(discountDTO);
+		ArrayList<DiscountInfoDTO> eligibleDiscounts = discountCatalog.fetchEligibleDiscounts(discountDTO);
 		ArrayList<DiscountStrategy> discountStrategies = new ArrayList<>();
 
-		for (Discount discount : eligibleDiscounts) {
+		for (DiscountInfoDTO discount : eligibleDiscounts) {
 			switch (discount.type()) {
-			case ITEM_BASED -> discountStrategies.add(
-					new ItemBasedDiscount(discount.value(), discount.description()));
-			case TOTAL_PERCENT -> discountStrategies.add(
-					new TotalPricePercentageDiscount(discount.value(), discount.description()));
-			case CUSTOMER_PERCENT -> discountStrategies.add(
-					new CustomerBasedDiscount(discount.value(), discount.description()));
+			case "ITEM_BASED" -> discountStrategies
+					.add(new ItemBasedDiscount(discount.value(), discount.description()));
+			case "TOTAL_PERCENT" -> discountStrategies
+					.add(new TotalPricePercentageDiscount(discount.value(), discount.description()));
+			case "CUSTOMER_PERCENT" -> discountStrategies
+					.add(new CustomerBasedDiscount(discount.value(), discount.description()));
 			}
 		}
 
