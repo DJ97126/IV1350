@@ -14,6 +14,7 @@ import integration.InventorySystem;
 import integration.ItemNotFoundException;
 import integration.Printer;
 import model.Amount;
+import model.discount.DiscountFactory;
 import model.discount.DiscountStrategy;
 import model.Sale;
 import observer.TotalRevenueObserver;
@@ -25,7 +26,7 @@ import util.LogHandler;
 public class Controller {
 	private final AccountingSystem accountingSystem;
 	private final InventorySystem inventorySystem;
-	private final DiscountCatalog discountCatalog;
+	private final DiscountFactory discountFactory;
 	private final Printer printer;
 
 	private final LogHandler logger = LogHandler.getLogger();
@@ -39,7 +40,7 @@ public class Controller {
 	public Controller() {
 		accountingSystem = new AccountingSystem();
 		inventorySystem = new InventorySystem();
-		discountCatalog = new DiscountCatalog();
+		discountFactory = new DiscountFactory(new DiscountCatalog());
 		printer = new Printer();
 	}
 
@@ -102,7 +103,7 @@ public class Controller {
 		Amount totalPrice = sale.getTotalPrice();
 
 		DiscountDTO discountDTO = new DiscountDTO(boughtItems, totalPrice, customerId);
-		ArrayList<DiscountStrategy> discounts = discountCatalog.fetchEligibleDiscounts(discountDTO);
+		ArrayList<DiscountStrategy> discounts = discountFactory.fetchEligibleDiscounts(discountDTO);
 
 		return sale.setDiscountedPrice(discounts);
 	}

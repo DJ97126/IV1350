@@ -12,7 +12,7 @@ public class CustomerBasedDiscount implements DiscountStrategy {
 	/**
 	 * Creates a new customer-based percentage discount strategy.
 	 *
-	 * @param discountPercentage The percentage (e.g., 0.05 for 5%) to discount.
+	 * @param discountPercentage The percentage in decimal form to discount.
 	 */
 	public CustomerBasedDiscount(Amount discountPercentage, String description) {
 		this.discountPercentage = discountPercentage;

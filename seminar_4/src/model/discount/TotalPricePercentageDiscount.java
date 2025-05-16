@@ -12,7 +12,7 @@ public class TotalPricePercentageDiscount implements DiscountStrategy {
 	/**
 	 * Creates a new total price percentage discount strategy.
 	 *
-	 * @param discountPercentage The percentage (e.g., 0.10 for 10%) to discount.
+	 * @param discountPercentage The percentage in decimal form to discount.
 	 */
 	public TotalPricePercentageDiscount(Amount discountPercentage, String description) {
 		this.discountPercentage = discountPercentage;
