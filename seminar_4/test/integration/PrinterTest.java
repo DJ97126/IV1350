@@ -54,7 +54,8 @@ public class PrinterTest {
 		Amount totalVat = new Amount("4.23");
 		Amount amountPaid = new Amount("100.0");
 		Amount change = new Amount("25.3");
-		SaleDTO saleInfo = new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change);
+		Amount discountedPrice = new Amount("70.97");
+		SaleDTO saleInfo = new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amountPaid, change, discountedPrice);
 		ReceiptDTO receipt = new ReceiptDTO(saleInfo);
 
 		printer.printReceipt(receipt);
