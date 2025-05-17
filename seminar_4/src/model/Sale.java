@@ -96,14 +96,12 @@ public class Sale {
 		for (DiscountStrategy discount : discounts) {
 			discountTotal = discountTotal.add(discount.calculateDiscount(totalPrice));
 		}
-		setTotalDiscounted(discountTotal);
+
+		this.totalDiscounted = discountTotal;
 		totalPrice = totalPrice.subtract(discountTotal);
 		return totalPrice;
 	}
 
-	private void setTotalDiscounted(Amount totalDiscounted) {
-		this.totalDiscounted = totalDiscounted;
-	}
 	/**
 	 * Retrieves all items that have been added to the sale.
 	 *
