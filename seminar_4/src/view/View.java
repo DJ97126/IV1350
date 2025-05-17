@@ -63,6 +63,22 @@ public class View {
 		}
 	}
 
+	/**
+	 * Simulates the process to add a nonexistent Item. This method should only be used for test
+	 */
+	public void simulateEnterInvalidItem() {
+		controller.startSale();
+		tryEnterItem("nonExistentItem");
+	}
+
+	/**
+	 * Simulates a database failure. This method should only be used for test
+	 */
+	public void simulateDatabaseFailure() {
+		controller.startSale();
+		tryEnterItem("fail114514");
+	}
+	
 	private void tryEnterItem(String itemId) {
 		try {
 			displayRunningInfo(controller.enterItem(itemId));

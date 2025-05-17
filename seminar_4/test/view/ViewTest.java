@@ -34,8 +34,8 @@ public class ViewTest {
     }
 
     @Test
-    public void testTryEnterItemNonExistentItem() {
-        view.simulateExecution(); // This will call tryEnterItem with "nonExistentItem"
+    public void testNonExistentItem() {
+        view.simulateEnterInvalidItem(); // This will call tryEnterItem with "nonExistentItem"
         String output = printoutBuffer.toString();
 
         // Verify error message for non-existent item
@@ -44,8 +44,8 @@ public class ViewTest {
     }
 
     @Test
-    public void testTryEnterItemDatabaseFailure() {
-        view.simulateExecution(); // This will call tryEnterItem with "fail114514"
+    public void testDatabaseFailure() {
+        view.simulateDatabaseFailure(); // This will call tryEnterItem with "fail114514"
         String output = printoutBuffer.toString();
 
         // Verify error message for database failure
