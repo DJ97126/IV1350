@@ -14,6 +14,7 @@ import observer.TotalRevenueObserver;
 public class TotalRevenueFileOutput implements TotalRevenueObserver {
 	private static final String REVENUE_FILE_NAME = "total_revenue.log";
 	private PrintWriter revenueFile;
+    private Amount totalRevenue = new Amount();
 
 	public TotalRevenueFileOutput() {
 		try {
@@ -25,7 +26,8 @@ public class TotalRevenueFileOutput implements TotalRevenueObserver {
 	}
 
 	@Override
-	public void updateTotalRevenue(Amount totalRevenue) {
+	public void updateTotalRevenue(Amount saleAmount) {
+		totalRevenue = totalRevenue.add(saleAmount);
 		String logMessage = "%s, Total Revenue: %s SEK".formatted(createTime(), totalRevenue.colonized());
 		revenueFile.println(logMessage);
 	}
