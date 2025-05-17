@@ -1,11 +1,13 @@
 package model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import model.discount.DiscountStrategy;
 import observer.TotalRevenueObserver;
 
 /**
@@ -16,7 +18,7 @@ public class Sale {
 	private final ArrayList<ItemDTO> boughtItems;
 	private Amount totalPrice;
 	private Amount totalVat;
-
+	private Amount totalDiscounted;
 	private Payment payment;
 
 	private ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
@@ -29,6 +31,7 @@ public class Sale {
 		boughtItems = new ArrayList<>();
 		totalPrice = new Amount();
 		totalVat = new Amount();
+		totalDiscounted = new Amount();
 		observers = new ArrayList<>();
 	}
 
@@ -82,6 +85,24 @@ public class Sale {
 	}
 
 	/**
+	 * Applies the given discounts to the sale and returns the discounted price.
+	 *
+	 * @param discounts The list of discount strategies to apply.
+	 * @return The discounted total price.
+	 */
+	public Amount setDiscountedPrice(ArrayList<DiscountStrategy> discounts) {
+		Amount discountTotal = new Amount();
+
+		for (DiscountStrategy discount : discounts) {
+			discountTotal = discountTotal.add(discount.calculateDiscount(totalPrice));
+		}
+
+		this.totalDiscounted = discountTotal;
+		totalPrice = totalPrice.subtract(discountTotal);
+		return totalPrice;
+	}
+
+	/**
 	 * Retrieves all items that have been added to the sale.
 	 *
 	 * @return The bought items. Returns an empty list if no items have been added.
@@ -109,7 +130,7 @@ public class Sale {
 		Amount change = getChange(amount);
 		notifyObservers();
 
-		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
+		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change, totalDiscounted);
 	}
 
 	private Amount getChange(Amount amount) {

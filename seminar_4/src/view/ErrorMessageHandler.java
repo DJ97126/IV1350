@@ -2,7 +2,6 @@ package view;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 /**
  * This class is responsible for showing error messages to the user.
@@ -20,7 +19,7 @@ class ErrorMessageHandler {
 
 	private String createTime() {
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return now.format(formatter);
 	}
 }

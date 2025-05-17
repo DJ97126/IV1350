@@ -1,16 +1,21 @@
 package controller;
 
+import java.util.ArrayList;
+
+import dto.DiscountDTO;
 import dto.ItemDTO;
 import dto.ReceiptDTO;
 import dto.SaleDTO;
 import dto.SaleInfoDTO;
 import integration.AccountingSystem;
 import integration.DatabaseFailureException;
+import integration.DiscountCatalog;
 import integration.InventorySystem;
 import integration.ItemNotFoundException;
 import integration.Printer;
-import java.util.ArrayList;
 import model.Amount;
+import model.discount.DiscountFactory;
+import model.discount.DiscountStrategy;
 import model.Sale;
 import observer.TotalRevenueObserver;
 import util.LogHandler;
@@ -21,6 +26,7 @@ import util.LogHandler;
 public class Controller {
 	private final AccountingSystem accountingSystem;
 	private final InventorySystem inventorySystem;
+	private final DiscountFactory discountFactory;
 	private final Printer printer;
 
 	private final LogHandler logger = LogHandler.getLogger();
@@ -34,6 +40,7 @@ public class Controller {
 	public Controller() {
 		accountingSystem = new AccountingSystem();
 		inventorySystem = new InventorySystem();
+		discountFactory = new DiscountFactory(new DiscountCatalog());
 		printer = new Printer();
 	}
 
@@ -83,6 +90,22 @@ public class Controller {
 	 */
 	public Amount endSale() {
 		return sale.getTotalPrice().rounded();
+	}
+
+	/**
+	 * Requests and applies all eligible discounts for the given customer.
+	 *
+	 * @param customerId The customer ID.
+	 * @return The discounted total price.
+	 */
+	public Amount requestDiscount(int customerId) {
+		ArrayList<ItemDTO> boughtItems = sale.getBoughtItems();
+		Amount totalPrice = sale.getTotalPrice();
+
+		DiscountDTO discountDTO = new DiscountDTO(boughtItems, totalPrice, customerId);
+		ArrayList<DiscountStrategy> discounts = discountFactory.fetchEligibleDiscounts(discountDTO);
+
+		return sale.setDiscountedPrice(discounts);
 	}
 
 	/**

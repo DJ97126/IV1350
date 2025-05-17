@@ -42,6 +42,9 @@ public class View {
 		Amount totalPrice = controller.endSale();
 		displayEndSaleInfo(totalPrice);
 
+		Amount discountedPrice = controller.requestDiscount(114514);
+		displayDiscountInfo(discountedPrice);
+
 		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
 
@@ -64,9 +67,13 @@ public class View {
 		try {
 			displayRunningInfo(controller.enterItem(itemId));
 		} catch (ItemNotFoundException e) {
-			displayUiErrorMessage("Item with ID %s not found".formatted(itemId));
+			displayUiErrorMessage("""
+					Item with ID %s not found
+					""".formatted(itemId));
 		} catch (RuntimeException e) {
-			displayUiErrorMessage("A system error occurred. Please try again or contact support.");
+			displayUiErrorMessage("""
+					A system error occurred. Please try again or contact support.
+					""");
 		}
 	}
 
@@ -103,8 +110,14 @@ public class View {
 
 	private void displayChangeInfo(Amount change) {
 		System.out.println("""
-				Change to give the customer : %s SEK
+				Change to give the customer: %s SEK
 								""".formatted(change.colonized()));
+	}
+
+	private void displayDiscountInfo(Amount discountedPrice) {
+		System.out.println("""
+				Discounted price: %s SEK
+				""".formatted(discountedPrice.colonized()));
 	}
 
 	private void displayUiErrorMessage(String uiMessage) {
