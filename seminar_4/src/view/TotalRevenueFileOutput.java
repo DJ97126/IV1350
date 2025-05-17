@@ -14,11 +14,12 @@ import observer.TotalRevenueObserver;
 public class TotalRevenueFileOutput implements TotalRevenueObserver {
 	private static final String REVENUE_FILE_NAME = "total_revenue.log";
 	private PrintWriter revenueFile;
-    private Amount totalRevenue = new Amount();
+    private Amount totalRevenue;
 
 	public TotalRevenueFileOutput() {
 		try {
 			revenueFile = new PrintWriter(new FileWriter(REVENUE_FILE_NAME, true), true);
+			totalRevenue = new Amount();
 		} catch (IOException e) {
 			System.out.println("Could not create revenue log file.");
 			e.printStackTrace();
