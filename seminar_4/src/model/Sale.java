@@ -18,7 +18,7 @@ public class Sale {
 	private final ArrayList<ItemDTO> boughtItems;
 	private Amount totalPrice;
 	private Amount totalVat;
-
+	private Amount totalDiscounted;
 	private Payment payment;
 
 	private ArrayList<TotalRevenueObserver> observers = new ArrayList<>();
@@ -31,6 +31,7 @@ public class Sale {
 		boughtItems = new ArrayList<>();
 		totalPrice = new Amount();
 		totalVat = new Amount();
+		totalDiscounted = new Amount();
 		observers = new ArrayList<>();
 	}
 
@@ -95,11 +96,14 @@ public class Sale {
 		for (DiscountStrategy discount : discounts) {
 			discountTotal = discountTotal.add(discount.calculateDiscount(totalPrice));
 		}
-
+		setTotalDiscounted(discountTotal);
 		totalPrice = totalPrice.subtract(discountTotal);
 		return totalPrice;
 	}
 
+	private void setTotalDiscounted(Amount totalDiscounted) {
+		this.totalDiscounted = totalDiscounted;
+	}
 	/**
 	 * Retrieves all items that have been added to the sale.
 	 *
@@ -128,7 +132,7 @@ public class Sale {
 		Amount change = getChange(amount);
 		notifyObservers();
 
-		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change);
+		return new SaleDTO(saleDateTime, boughtItems, totalPrice, totalVat, amount, change, totalDiscounted);
 	}
 
 	private Amount getChange(Amount amount) {

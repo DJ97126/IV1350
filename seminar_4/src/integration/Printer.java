@@ -71,19 +71,20 @@ public class Printer {
 		String vat = saleInfo.totalVat().colonized();
 		String paid = saleInfo.amountPaid().colonized();
 		String change = saleInfo.change().colonized();
+		String discountTotal = saleInfo.discountedPrice().colonized();
 
 		return """
 				------------------ Begin receipt -------------------
 				Time of Sale: %38s
 
 				%s
-
+				Discount Applied: %30s SEK
 				Total: %41s SEK
 				VAT: %43s SEK
 
 				Cash: %42s SEK
 				Change: %40s SEK
 				------------------ End receipt ---------------------
-				""".formatted(time, itemsString, total, vat, paid, change);
+				""".formatted(time, itemsString, discountTotal, total, vat, paid, change);
 	}
 }
