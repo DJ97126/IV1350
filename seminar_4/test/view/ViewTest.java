@@ -35,7 +35,6 @@ public class ViewTest {
 
     @Test
     public void testTryEnterItemNonExistentItem() {
-        controller.startSale();
         view.simulateExecution(); // This will call tryEnterItem with "nonExistentItem"
         String output = printoutBuffer.toString();
 
@@ -46,7 +45,6 @@ public class ViewTest {
 
     @Test
     public void testTryEnterItemDatabaseFailure() {
-        controller.startSale();
         view.simulateExecution(); // This will call tryEnterItem with "fail114514"
         String output = printoutBuffer.toString();
 
