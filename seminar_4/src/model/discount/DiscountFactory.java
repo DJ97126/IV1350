@@ -1,9 +1,10 @@
 package model.discount;
 
+import java.util.ArrayList;
+
 import dto.DiscountDTO;
 import dto.DiscountInfoDTO;
 import integration.DiscountCatalog;
-import java.util.ArrayList;
 
 /**
  * Factory for creating eligible discount strategies based on sale and customer data.
