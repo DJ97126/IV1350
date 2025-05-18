@@ -134,8 +134,7 @@ public class Sale {
 	}
 
 	private Amount getChange(Amount amount) {
-		Amount change = amount.subtract(totalPrice);
-		return change;
+		return amount.subtract(totalPrice);
 	}
 
 	/**

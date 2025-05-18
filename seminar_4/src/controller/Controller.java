@@ -105,7 +105,8 @@ public class Controller {
 		DiscountDTO discountDTO = new DiscountDTO(boughtItems, totalPrice, customerId);
 		ArrayList<DiscountStrategy> discounts = discountFactory.fetchEligibleDiscounts(discountDTO);
 
-		return sale.setDiscountedPrice(discounts);
+		Amount discountedPrice = sale.setDiscountedPrice(discounts);
+		return discountedPrice;
 	}
 
 	/**
