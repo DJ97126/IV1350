@@ -22,7 +22,10 @@ public class DiscountCatalog {
 	}
 
 	/**
-	 * Fetch discount based on the type of the discount
+	 * Fetch discount based on the type of the discount.
+	 * 
+	 * @param discountDTO The discount information.
+	 * @return A list of eligible discounts.
 	 */
 	public ArrayList<DiscountInfoDTO> fetchEligibleDiscounts(DiscountDTO discountDTO) {
 		ArrayList<DiscountInfoDTO> eligibleDiscounts = new ArrayList<>();

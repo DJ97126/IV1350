@@ -14,6 +14,11 @@ public class LogHandler {
 	private static final LogHandler INSTANCE = new LogHandler();
 	private PrintWriter logFile;
 
+	/**
+	 * Returns the singleton instance of LogHandler.
+	 * 
+	 * @return The singleton instance of LogHandler.
+	 */
 	public static LogHandler getLogger() {
 		return INSTANCE;
 	}
