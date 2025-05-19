@@ -1,10 +1,9 @@
 package integration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import dto.DiscountDTO;
 import dto.DiscountInfoDTO;
+import java.util.ArrayList;
+import java.util.HashMap;
 import model.Amount;
 
 /**
@@ -21,6 +20,9 @@ public class DiscountCatalog {
 		simulateCatalog();
 	}
 
+	/**
+	 * Fetch discount based on the type of the discount
+	 */
 	public ArrayList<DiscountInfoDTO> fetchEligibleDiscounts(DiscountDTO discountDTO) {
 		ArrayList<DiscountInfoDTO> eligibleDiscounts = new ArrayList<>();
 

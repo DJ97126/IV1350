@@ -3,7 +3,7 @@ package integration;
 /**
  * Thrown when no item with the specified identifier is found in the inventory.
  */
-public class ItemNotFoundException extends Exception {
+public class ItemNotFoundException extends RuntimeException {
 	/**
 	 * Creates a new instance with a message about the missing item.
 	 * 
