@@ -22,7 +22,7 @@ public class LogHandler {
 		try {
 			logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME, true), true);
 		} catch (IOException e) {
-			System.out.println("Could not create exception log file.");
+			System.out.println("Could not create exception logger or file.");
 			e.printStackTrace();
 		}
 	}

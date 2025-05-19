@@ -1,9 +1,10 @@
 package integration;
 
-import dto.DiscountDTO;
-import dto.DiscountInfoDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import dto.DiscountDTO;
+import dto.DiscountInfoDTO;
 import model.Amount;
 
 /**
