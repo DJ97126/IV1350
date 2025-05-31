@@ -1,0 +1,20 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "test"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "javadoc-tools.generateJavadoc.isUsingPwsh": false,
+    "javadoc-tools.generateJavadoc.workspaceSourceFolder": "./src/",
+    "javadoc-tools.generateJavadoc.targetFolder": "./javadoc/",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "[java]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false
+    }
+}
