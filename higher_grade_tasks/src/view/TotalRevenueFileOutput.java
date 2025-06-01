@@ -5,45 +5,45 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import model.Amount;
-import observer.TotalRevenueObserver;
+import observer.TotalRevenueObserverTemplate;
 
 /**
  * Observer that prints the total revenue to a file.
  */
-public class TotalRevenueFileOutput implements TotalRevenueObserver {
-	private static final String REVENUE_FILE_NAME = "total_revenue.log";
-	private PrintWriter revenueFile;
-    private Amount totalRevenue;
+public class TotalRevenueFileOutput extends TotalRevenueObserverTemplate {
+    private static final String REVENUE_FILE_NAME = "total_revenue.log";
+    private PrintWriter revenueFile;
 
-	/**
-	 * Constructor of the class, creates a log file, which name is recording to REVENUE_FILE_NAME
-	 */
-	public TotalRevenueFileOutput() {
-		totalRevenue = new Amount();
-		try {
-			revenueFile = new PrintWriter(new FileWriter(REVENUE_FILE_NAME, true), true);
-		} catch (IOException e) {
-			System.out.println("Could not create revenue log file.");
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Constructor of the class, creates a log file, which name is recorded in REVENUE_FILE_NAME
+     */
+    public TotalRevenueFileOutput() {
+        try {
+            revenueFile = new PrintWriter(new FileWriter(REVENUE_FILE_NAME, true), true);
+        } catch (IOException e) {
+            System.out.println("Could not create revenue log file.");
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Updates the log with the sale price
-	 * 
-	 * @param saleAmount the total price of the sale that is finalized
-	 */
-	@Override
-	public void updateTotalRevenue(Amount saleAmount) {
-		totalRevenue = totalRevenue.add(saleAmount);
-		String logMessage = "%s, Total Revenue: %s SEK".formatted(createTime(), totalRevenue.colonized());
-		revenueFile.println(logMessage);
-	}
+    @Override
+    protected void doShowTotalIncome() throws IOException {
+        if (revenueFile == null) {
+            throw new IOException("Revenue file is not initialized.");
+        }
+        String logMessage = "%s, Total Revenue: %s SEK".formatted(createTime(), totalRevenue.colonized());
+        revenueFile.println(logMessage);
+    }
 
-	private String createTime() {
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return now.format(formatter);
-	}
+    @Override
+    protected void handleErrors(Exception e) {
+        System.out.println("Error writing total revenue to file: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    private String createTime() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return now.format(formatter);
+    }
 }

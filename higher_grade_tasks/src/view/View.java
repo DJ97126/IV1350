@@ -48,19 +48,17 @@ public class View {
 		Amount change = controller.finalizeSaleWithPayment(new Amount("100"));
 		displayChangeInfo(change);
 
-		/* Simulate multiple sale instances */
-		for (int i = 0; i < 3; i++) {
+		/* Simulate sale instance */
 			controller.startSale();
 
 			tryEnterItem("abc123");
-			tryEnterItem("def456");
+			tryEnterItem("def456"); 
 
 			Amount total = controller.endSale();
 			displayEndSaleInfo(total);
 
 			Amount changeToCustomer = controller.finalizeSaleWithPayment(new Amount("100"));
 			displayChangeInfo(changeToCustomer);
-		}
 	}
 
 	/**

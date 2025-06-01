@@ -1,28 +1,24 @@
 package view;
 
-import model.Amount;
-import observer.TotalRevenueObserver;
+import observer.TotalRevenueObserverTemplate;
 
 /**
  * Observer that prints the total revenue to the console.
  */
-public class TotalRevenueView implements TotalRevenueObserver {
-	private Amount totalRevenue;
+public class TotalRevenueView extends TotalRevenueObserverTemplate {
+    /**
+     * Print the observed total revenue in console
+     */
+    @Override
+    protected void doShowTotalIncome() {
+        System.out.println("""
+                Total Revenue: %s SEK
+                """.formatted(totalRevenue.colonized()));
+    }
 
-	/**
-	 * Constructor for the class
-	 */
-	public TotalRevenueView(){
-		totalRevenue = new Amount();
-	}
-	/**
-	 * Print the observed total revenue in console
-	 */
-	@Override
-	public void updateTotalRevenue(Amount saleAmount) {
-		totalRevenue = totalRevenue.add(saleAmount);
-		System.out.println("""
-				Total Revenue: %s SEK
-				""".formatted(totalRevenue.colonized()));
-	}
+    @Override
+    protected void handleErrors(Exception e) {
+        System.out.println("Error displaying total revenue: " + e.getMessage());
+        e.printStackTrace();
+    }
 }
